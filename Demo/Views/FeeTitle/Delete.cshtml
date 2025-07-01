@@ -1,0 +1,32 @@
+﻿@model Demo.Models.FeeTitle
+@{
+    ViewData["Title"] = "Delete Fee Title";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-danger mb-4">🗑️ Delete Fee Title</h2>
+
+<div class="alert alert-warning">
+    <strong>Are you sure?</strong> You are about to delete the following fee title. This action cannot be undone.
+</div>
+
+<div class="mb-3">
+    <label class="form-label fw-bold">Title:</label>
+    <div>@Model.Title</div>
+</div>
+
+<div class="mb-3">
+    <label class="form-label fw-bold">Remarks:</label>
+    <div>@Model.Remarks</div>
+</div>
+
+<div class="mb-3">
+    <label class="form-label fw-bold">Status:</label>
+    <div>@Model.Status</div>
+</div>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
+</form>

@@ -1,0 +1,79 @@
+﻿@model Demo.Models.FeeDiscount
+
+@{
+    ViewData["Title"] = "Add New Discount";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-primary mb-4">➕ Add Fee Discount</h2>
+
+<form asp-action="Create" method="post" class="row g-3">
+    <div class="col-md-6">
+        <label asp-for="FeeDiscountName" class="form-label"></label>
+        <input asp-for="FeeDiscountName" class="form-control" />
+        <span asp-validation-for="FeeDiscountName" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="DiscountCategoryId" class="form-label"></label>
+        <select asp-for="DiscountCategoryId" class="form-select" asp-items="ViewBag.DiscountCategoryList">
+            <option value="">-- Select Category --</option>
+        </select>
+        <span asp-validation-for="DiscountCategoryId" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="DiscountType" class="form-label"></label>
+        <select asp-for="DiscountType" class="form-select" asp-items="ViewBag.DiscountTypeList" id="discountTypeSelect">
+            <option value="">-- Select Type --</option>
+        </select>
+        <span asp-validation-for="DiscountType" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6" id="percentageField" style="display:none;">
+        <label asp-for="Percentage" class="form-label"></label>
+        <input asp-for="Percentage" class="form-control" />
+        <span asp-validation-for="Percentage" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6" id="amountField" style="display:none;">
+        <label asp-for="Amount" class="form-label"></label>
+        <input asp-for="Amount" class="form-control" />
+        <span asp-validation-for="Amount" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="Remarks" class="form-label"></label>
+        <textarea asp-for="Remarks" class="form-control"></textarea>
+        <span asp-validation-for="Remarks" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="Status" class="form-label"></label>
+        <select asp-for="Status" class="form-select" asp-items="ViewBag.StatusList">
+            <option value="">-- Select Status --</option>
+        </select>
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-success">💾 Save Discount</button>
+        <a asp-action="Index" class="btn btn-secondary">↩️ Back</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function toggleDiscountFields() {
+            const type = document.getElementById("discountTypeSelect").value;
+            document.getElementById("percentageField").style.display = type === "Percentage" ? "block" : "none";
+            document.getElementById("amountField").style.display = type === "Fixed Amount" ? "block" : "none";
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            toggleDiscountFields();
+            document.getElementById("discountTypeSelect").addEventListener("change", toggleDiscountFields);
+        });
+    </script>
+}

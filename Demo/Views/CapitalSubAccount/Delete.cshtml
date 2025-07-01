@@ -1,0 +1,23 @@
+﻿@model Demo.Models.CapitalSubAccount
+@{
+    ViewData["Title"] = "Delete Capital Sub Account";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-danger mb-3">Are you sure you want to delete this?</h2>
+
+<div class="mb-3">
+    <strong>Title:</strong> @Model.Title
+</div>
+<div class="mb-3">
+    <strong>Status:</strong>
+    <span class="badge @(Model.IsActive ? "bg-success" : "bg-danger")">
+        @(Model.IsActive ? "Active" : "Inactive")
+    </span>
+</div>
+
+<form method="post" asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">🗑 Confirm Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">↩️ Cancel</a>
+</form>

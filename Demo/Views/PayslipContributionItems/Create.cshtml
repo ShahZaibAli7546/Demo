@@ -1,0 +1,34 @@
+﻿@model Demo.Models.PayslipContributionItem
+
+@{
+    ViewData["Title"] = "Create Contribution Item";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h3 class="text-primary mb-4">➕ Add Payslip Contribution Item</h3>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label class="form-label">Title</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Expense Account</label>
+        <select asp-for="ExpenseAccountId" class="form-select" asp-items="ViewBag.Accounts"></select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Liability Account</label>
+        <select asp-for="LiabilityAccountId" class="form-select" asp-items="ViewBag.Accounts"></select>
+    </div>
+
+    <button type="submit" class="btn btn-success">💾 Save</button>
+    <a asp-action="Index" asp-controller="PayslipItems" class="btn btn-secondary">Cancel</a>
+</form>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

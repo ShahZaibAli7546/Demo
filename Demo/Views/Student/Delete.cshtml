@@ -1,0 +1,18 @@
+﻿@model Demo.Models.Student
+
+@{
+    ViewData["Title"] = "Delete Student";
+    Layout = "~/Views/Shared/_Business.cshtml";
+}
+
+<h2 class="text-danger">🗑️ Confirm Delete</h2>
+
+<div class="alert alert-warning">
+    Are you sure you want to delete student <strong>@Model.StudentName</strong> (Admission No: @Model.AdmissionNo)?
+</div>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="AdmissionNo" />
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+</form>

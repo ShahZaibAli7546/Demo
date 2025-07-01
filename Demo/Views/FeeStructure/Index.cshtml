@@ -1,0 +1,63 @@
+﻿@model List<Demo.Models.FeeStructure>
+
+@{
+    ViewData["Title"] = "Fee Structures";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-primary mb-4">💰 Fee Structures</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<a asp-action="Create" class="btn btn-success mb-3">➕ Add Fee Structure</a>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Structure Name</th>
+            <th>Service</th>
+            <th>Discount</th>
+            <th>Amount</th>
+            <th>Remarks</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            int count = 1;
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@count</td>
+                    <td>@(item.StructureName ?? "—")</td>
+                    <td>@(item.FeeServiceName ?? "—")</td>
+                    <td>@(item.FeeDiscountName ?? "—")</td>
+                    <td>@item.Amount.ToString("N2")</td>
+                    <td>@(item.Remarks ?? "-")</td>
+                    <td>
+                        <span class="badge bg-@(item.Status == "Active" ? "success" : "secondary")">
+                            @item.Status
+                        </span>
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary">✏️ Edit</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger ms-2">🗑️ Delete</a>
+                    </td>
+                </tr>
+                count++;
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="7" class="text-center text-muted">No fee structures found.</td>
+            </tr>
+        }
+    </tbody>
+</table>

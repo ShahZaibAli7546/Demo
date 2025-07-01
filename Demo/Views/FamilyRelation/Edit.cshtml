@@ -1,0 +1,35 @@
+﻿@model Demo.Models.FamilyRelation
+@{
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+    ViewData["Title"] = "Edit Family Relation";
+}
+
+<h2 class="text-primary mb-4">✏️ Edit Family Relation</h2>
+
+<form asp-action="Edit" method="post" class="row g-3">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="col-md-6">
+        <label asp-for="RelationName" class="form-label"></label>
+        <input asp-for="RelationName" class="form-control" />
+        <span asp-validation-for="RelationName" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="Status" class="form-label"></label>
+        <select asp-for="Status" class="form-select">
+            <option>Active</option>
+            <option>Inactive</option>
+        </select>
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+
+    <div class="col-12 d-flex gap-2">
+        <button type="submit" class="btn btn-primary">💾 Update</button>
+        <a asp-action="Index" class="btn btn-secondary">🔙 Back</a>
+    </div>
+</form>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

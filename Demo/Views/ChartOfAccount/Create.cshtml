@@ -1,0 +1,58 @@
+﻿@model Demo.Models.ChartOfAccount
+@{
+    ViewData["Title"] = "Create Account";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-primary mb-4">➕ Create Account or Group</h2>
+
+<form asp-action="Create" method="post" class="row g-3">
+    <div class="col-md-6">
+        <label asp-for="Title" class="form-label"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="ParentAccountId" class="form-label">Parent Group (optional)</label>
+        <select asp-for="ParentAccountId" class="form-select" asp-items="ViewBag.ParentAccounts">
+            <option value="">-- Select Parent Group --</option>
+        </select>
+    </div>
+
+    <div class="col-md-4">
+        <label asp-for="GroupHead" class="form-label"></label>
+        <select asp-for="GroupHead" class="form-select">
+            <option value="">-- Select Group Head --</option>
+            <option>Assets</option>
+            <option>Liabilities</option>
+            <option>Equity</option>
+        </select>
+    </div>
+
+    <div class="col-md-4">
+        <label asp-for="AccountType" class="form-label"></label>
+        <select asp-for="AccountType" class="form-select">
+            <option>Debit</option>
+            <option>Credit</option>
+        </select>
+    </div>
+
+    <div class="col-md-4">
+        <label asp-for="StartingBalance" class="form-label"></label>
+        <input asp-for="StartingBalance" class="form-control" />
+    </div>
+
+    <div class="col-md-4">
+        <label asp-for="Status" class="form-label"></label>
+        <select asp-for="Status" class="form-select">
+            <option>Active</option>
+            <option>Inactive</option>
+        </select>
+    </div>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-success">💾 Save</button>
+        <a asp-action="Index" class="btn btn-secondary">↩️ Back</a>
+    </div>
+</form>

@@ -1,0 +1,23 @@
+﻿@model Demo.Models.PayslipEarningItem
+@{
+    ViewData["Title"] = "Delete Payslip Earning Item";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-danger mb-3">🗑️ Confirm Delete</h2>
+
+<div class="alert alert-warning">
+    Are you sure you want to delete this item?
+</div>
+
+<div class="mb-3"><strong>Title:</strong> @Model.Title</div>
+<div class="mb-3"><strong>Expense Account:</strong> @Model.ExpenseAccountName</div>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">🗑️ Delete</button>
+    <a asp-action="Index" asp-controller="PayslipItems" class="btn btn-secondary">Cancel</a>
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

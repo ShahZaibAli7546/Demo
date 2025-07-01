@@ -1,0 +1,69 @@
+﻿@model Demo.Models.TimeTableManagement
+
+@{
+    ViewData["Title"] = "Delete Time Table";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-danger mb-4">🗑️ Delete Time Table</h2>
+
+<h4 class="text-muted">Are you sure you want to delete this Time Table?</h4>
+<hr />
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        <label class="form-label fw-bold">Title:</label>
+        <div class="form-control-plaintext">@Model.Title</div>
+    </div>
+
+    <div class="col-md-6">
+        <label class="form-label fw-bold">Campus:</label>
+        <div class="form-control-plaintext">@ViewBag.CampusName</div>
+    </div>
+
+    <div class="col-md-6">
+        <label class="form-label fw-bold">Opening Time:</label>
+        <div class="form-control-plaintext">@Model.OpeningTime.ToString("hh\\:mm")</div>
+    </div>
+
+    <div class="col-md-6">
+        <label class="form-label fw-bold">Closing Time:</label>
+        <div class="form-control-plaintext">@Model.ClosingTime.ToString("hh\\:mm")</div>
+    </div>
+
+    <div class="col-md-6">
+        <label class="form-label fw-bold">Is Weekend:</label>
+        <div class="form-control-plaintext">@Model.IsWeekend</div>
+    </div>
+
+    <div class="col-md-6">
+        <label class="form-label fw-bold">Is Half Day:</label>
+        <div class="form-control-plaintext">@Model.IsHalfDay</div>
+    </div>
+
+    @if (Model.IsHalfDay)
+    {
+        <div class="col-md-6">
+            <label class="form-label fw-bold">Half Day Closing Time:</label>
+            <div class="form-control-plaintext">@Model.HalfDayClosingTime?.ToString("hh\\:mm")</div>
+        </div>
+    }
+
+    <div class="col-md-6">
+        <label class="form-label fw-bold">Late Limit (minutes):</label>
+        <div class="form-control-plaintext">@Model.LateLimitMinutes</div>
+    </div>
+
+    <div class="col-md-6">
+        <label class="form-label fw-bold">Early Out Limit (minutes):</label>
+        <div class="form-control-plaintext">@Model.EarlyOutLimitMinutes</div>
+    </div>
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="mt-4">
+        <button type="submit" class="btn btn-danger">🗑️ Confirm Delete</button>
+        <a asp-action="Index" class="btn btn-secondary">↩️ Cancel</a>
+    </div>
+</form>

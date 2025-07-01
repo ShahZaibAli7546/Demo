@@ -1,0 +1,41 @@
+﻿@model Demo.Models.PayslipDeductionItem
+@{
+    ViewData["Title"] = "Edit Deduction Item";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h3 class="text-primary mb-4">✏️ Edit Payslip Deduction Item</h3>
+
+<form asp-action="Edit" method="post" class="row g-3">
+    <input type="hidden" asp-for="Id" />
+    <div class="col-md-6">
+        <label asp-for="Title" class="form-label">Title</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="ExpenseAccountId" class="form-label">Expense Account</label>
+        <select asp-for="ExpenseAccountId" class="form-select" asp-items="ViewBag.Accounts"></select>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="LiabilityAccountId" class="form-label">Liability Account</label>
+        <select asp-for="LiabilityAccountId" class="form-select" asp-items="ViewBag.Accounts"></select>
+    </div>
+    <div class="col-md-3 form-check mt-4 ms-3">
+        <input asp-for="IsAttendance" class="form-check-input" type="checkbox" />
+        <label asp-for="IsAttendance" class="form-check-label">Is Attendance Based</label>
+    </div>
+    <div class="col-md-3 form-check mt-4 ms-3">
+        <input asp-for="IsPayable" class="form-check-input" type="checkbox" />
+        <label asp-for="IsPayable" class="form-check-label">Is Payable</label>
+    </div>
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">🔄 Update</button>
+        <a asp-action="Index" asp-controller="PayslipItems" class="btn btn-secondary">Back</a>
+    </div>
+</form>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

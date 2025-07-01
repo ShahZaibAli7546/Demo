@@ -1,0 +1,58 @@
+﻿@model List<Demo.Models.FamilyRelation>
+@{
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+    ViewData["Title"] = "Family Relations";
+}
+
+<h2 class="text-primary mb-4">👨‍👩‍👧 Family Relations</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+<div class="text-end mb-3">
+    <a asp-action="Create" class="btn btn-success">➕ Add New Relation</a>
+</div>
+
+<table class="table table-bordered table-striped align-middle">
+    <thead class="table-primary">
+        <tr>
+            <th>#</th>
+            <th>Relation</th>
+            <th>Status</th>
+            <th class="text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="4" class="text-center text-muted">No relations found.</td>
+            </tr>
+        }
+        else
+        {
+            var i = 1;
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>@item.RelationName</td>
+                    <td>
+                        <span class="badge bg-@(item.Status == "Active" ? "success" : "secondary")">
+                            @item.Status
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <div class="d-flex justify-content-center gap-2">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">✏️ Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">🗑️ Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                i++;
+            }
+        }
+    </tbody>
+</table>

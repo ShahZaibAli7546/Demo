@@ -1,0 +1,49 @@
+﻿@model Demo.Models.Classroom
+
+@{
+    ViewData["Title"] = "Add Classroom";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-primary mb-3">➕ Add New Classroom</h2>
+
+<!-- Show model-level errors -->
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <div>@error.ErrorMessage</div>
+        }
+    </div>
+}
+
+<form asp-action="Create" method="post" class="needs-validation">
+    <div class="mb-3">
+        <label asp-for="ClassName" class="form-label"></label>
+        <input asp-for="ClassName" class="form-control" />
+        <span asp-validation-for="ClassName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Status" class="form-label"></label>
+        <select asp-for="Status" class="form-select">
+            <option value="Active" selected="@(Model.Status == "Active")">Active</option>
+            <option value="Inactive" selected="@(Model.Status == "Inactive")">Inactive</option>
+        </select>
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+
+
+    <!-- Hidden QRCodeLink input (auto-generated in controller) -->
+    <input asp-for="QRCodeLink" type="hidden" />
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">💾 Save</button>
+        <a asp-action="Index" class="btn btn-secondary">🔙 Back</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

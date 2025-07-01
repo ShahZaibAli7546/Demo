@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Demo.Models.FeeDiscount>
+
+@{
+    ViewData["Title"] = "Fee Discounts";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-primary mb-4">🏷️ Fee Discounts</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+<div class="mb-3">
+    <a asp-action="Create" class="btn btn-success">➕ Add Discount</a>
+</div>
+
+<table class="table table-bordered table-striped align-middle">
+    <thead class="table-light">
+        <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Type</th>
+            <th>Value</th>
+            <th>Status</th>
+            <th style="width: 150px;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="7" class="text-center text-muted">No discounts found.</td>
+            </tr>
+        }
+        else
+        {
+            int index = 1;
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@index</td>
+                    <td>@item.FeeDiscountName</td>
+                    <td>@item.DiscountCategoryName</td>
+                    <td>@item.DiscountType</td>
+                    <td>
+                        @if (item.DiscountType == "Percentage")
+                        {
+                            @($"{item.Percentage}%")
+                        }
+                        else if (item.DiscountType == "Fixed Amount")
+                        {
+                            @($"Rs. {item.Amount}")
+                        }
+                    </td>
+                    <td>
+                        <span class="badge bg-@(item.Status == "Active" ? "success" : "secondary")">@item.Status</span>
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.FeeDiscountId" class="btn btn-sm btn-primary me-1">✏️ Edit</a>
+                        <form asp-action="Delete" asp-route-id="@item.FeeDiscountId" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this discount?');">
+                            <button type="submit" class="btn btn-sm btn-danger">🗑️ Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                index++;
+            }
+        }
+    </tbody>
+</table>

@@ -1,0 +1,110 @@
+﻿@model Demo.Models.TakePaymentReceiptFormat
+@{
+    Layout = null;
+    var logoPath = !string.IsNullOrEmpty(Model.SchoolLogoPath) ? Model.SchoolLogoPath : "/images/default-logo.png";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Payment Receipt</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 40px; }
+        .header, .footer { text-align: center; }
+        .logo { max-height: 80px; }
+        .info, .summary { margin-top: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 25px; }
+        th, td { border: 1px solid #444; padding: 6px; text-align: center; }
+        .bold { font-weight: bold; }
+        .right { text-align: right; }
+        .paid-by { margin-top: 30px; font-size: 16px; font-weight: bold; }
+        .heading { font-size: 18px; margin-top: 15px; font-weight: bold; text-align: center; text-decoration: underline; }
+    </style>
+</head>
+<body onload="window.print();">
+    <div class="header">
+        <img src="@logoPath" class="logo" alt="Logo" />
+        <h2>@Model.SchoolName</h2>
+        <div class="heading">Payment Receipt</div>
+    </div>
+
+    <div class="info">
+        <table>
+            <tr>
+                <td><b>Admission No.</b> @Model.AdmissionNo</td>
+                <td><b>Name</b> @Model.StudentName</td>
+                <td><b>S/O or D/O</b> @Model.FatherName</td>
+            </tr>
+            <tr>
+                <td><b>Batch</b> @Model.BatchName</td>
+                <td><b>Month</b> @Model.Month</td>
+                <td><b>Invoice No.</b> @Model.InvoiceNo</td>
+            </tr>
+            <tr>
+                <td colspan="2"><b>Payment Date</b> @Model.PaymentDate?.ToString("dd-MMM-yyyy")</td>
+                <td><b>Account</b> @Model.AccountName</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="details">
+        <table>
+            <thead>
+                <tr>
+                    <th>Sr#</th>
+                    <th>Service Name</th>
+                    <th>Amount</th>
+                    <th>Discount</th>
+                    <th>Net Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.FeeDetails)
+                {
+                    <tr>
+                        <td>@item.SrNo</td>
+                        <td>@item.ServiceName</td>
+                        <td>@item.Amount.ToString("N2")</td>
+                        <td>@item.Discount.ToString("N2")</td>
+                        <td>@item.NetAmount.ToString("N2")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="summary">
+        <table>
+            <tr>
+                <td class="right bold">Total Debit:</td>
+                <td>@Model.TotalDebit.ToString("N2")</td>
+            </tr>
+            <tr>
+                <td class="right bold">Total Discount:</td>
+                <td>@Model.TotalDiscount.ToString("N2")</td>
+            </tr>
+            <tr>
+                <td class="right bold">Fine:</td>
+                <td>@Model.TotalFine.ToString("N2")</td>
+            </tr>
+            <tr>
+                <td class="right bold">Total Credit:</td>
+                <td>@Model.TotalCredit.ToString("N2")</td>
+            </tr>
+            <tr>
+                <td class="right bold">Last Paid:</td>
+                <td>@Model.LastPaidAmount.ToString("N2")</td>
+            </tr>
+            <tr>
+                <td class="right bold">Closing Balance:</td>
+                <td>@Model.ClosingBalance.ToString("N2")</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="paid-by">
+        Paid by: <u>@Model.AccountName</u>
+    </div>
+</body>
+</html>

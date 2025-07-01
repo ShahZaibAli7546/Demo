@@ -1,0 +1,49 @@
+﻿@model Demo.Models.FeeDiscount
+
+@{
+    ViewData["Title"] = "Delete Discount";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-danger mb-4">🗑️ Confirm Delete</h2>
+
+<h5>Are you sure you want to delete this discount?</h5>
+
+<div class="border rounded p-4 bg-light">
+    <dl class="row">
+        <dt class="col-sm-4">Title</dt>
+        <dd class="col-sm-8">@Model.FeeDiscountName</dd>
+
+        <dt class="col-sm-4">Category</dt>
+        <dd class="col-sm-8">@Model.DiscountCategoryName</dd>
+
+        <dt class="col-sm-4">Type</dt>
+        <dd class="col-sm-8">@Model.DiscountType</dd>
+
+        <dt class="col-sm-4">Value</dt>
+        <dd class="col-sm-8">
+            @if (Model.DiscountType == "Percentage")
+            {
+                @($"{Model.Percentage}%")
+            }
+            else if (Model.DiscountType == "Fixed Amount")
+            {
+                @($"Rs. {Model.Amount}")
+            }
+        </dd>
+
+        <dt class="col-sm-4">Remarks</dt>
+        <dd class="col-sm-8">@Model.Remarks</dd>
+
+        <dt class="col-sm-4">Status</dt>
+        <dd class="col-sm-8">
+            <span class="badge bg-@(Model.Status == "Active" ? "success" : "secondary")">@Model.Status</span>
+        </dd>
+    </dl>
+</div>
+
+<form asp-action="Delete" method="post" class="mt-4">
+    <input type="hidden" asp-for="FeeDiscountId" />
+    <button type="submit" class="btn btn-danger">🗑️ Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">↩️ Cancel</a>
+</form>

@@ -1,0 +1,18 @@
+﻿@model Demo.Models.CashAccount
+@{
+    ViewData["Title"] = "Delete Cash Account";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-danger mb-3">🗑️ Delete Cash Account</h2>
+
+<h5>Are you sure you want to delete this cash account?</h5>
+<div class="mb-3">
+    <strong>Name:</strong> @Model.CashAccountName
+</div>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

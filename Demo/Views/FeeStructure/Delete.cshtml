@@ -1,0 +1,20 @@
+﻿@model Demo.Models.FeeStructure
+@{
+    ViewData["Title"] = "Delete Fee Structure";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-danger mb-3">🗑️ Delete Fee Structure</h2>
+
+<h5 class="mb-3">Are you sure you want to delete this record?</h5>
+
+<div class="mb-3"><strong>Service:</strong> @ViewBag.FeeServiceName</div>
+<div class="mb-3"><strong>Discount:</strong> @ViewBag.DiscountName</div>
+<div class="mb-3"><strong>Amount:</strong> @Model.Amount</div>
+<div class="mb-3"><strong>Status:</strong> @Model.Status</div>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

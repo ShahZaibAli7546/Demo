@@ -1,0 +1,45 @@
+﻿@model List<Demo.Models.PayslipTitle>
+@{
+    ViewData["Title"] = "Payslip Titles";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-primary mb-4">📄 Payslip Titles</h2>
+
+<a asp-action="Create" class="btn btn-sm btn-success mb-3">➕ Add New Payslip Title</a>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No payslip titles found.</div>
+}
+else
+{
+    <table class="table table-bordered table-hover table-striped align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Status</th>
+                <th style="width: 260px;" class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var title in Model)
+            {
+                <tr>
+                    <td>@title.Id</td>
+                    <td>@title.Title</td>
+                    <td>
+                        <span class="badge @(title.IsActive ? "bg-success" : "bg-danger")">
+                            @(title.IsActive ? "Active" : "Inactive")
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <a asp-action="Edit" asp-route-id="@title.Id" class="btn btn-sm btn-outline-info me-1">✏️ Edit</a>
+                        <a asp-action="Delete" asp-route-id="@title.Id" class="btn btn-sm btn-outline-danger">🗑 Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

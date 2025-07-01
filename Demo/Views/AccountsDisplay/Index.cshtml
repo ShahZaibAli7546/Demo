@@ -1,0 +1,139 @@
+﻿@model List<Demo.Models.AccountGroupWithAccountsViewModel>
+
+@{
+    ViewData["Title"] = "📘 Accounts Display";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+
+    var balanceSheetGroups = Model.Where(g => g.StatementType == "BalanceSheet").ToList();
+    var pnlGroups = Model.Where(g => g.StatementType == "ProfitAndLoss").ToList();
+}
+
+<h2 class="mb-4 text-primary">📘 Accounts Summary (Grouped)</h2>
+
+<div class="d-flex justify-content-between mb-3">
+    <a href="/AccountGroups/Create" class="btn btn-sm btn-primary">➕ Add New Group</a>
+    <a href="/Accounts/Create" class="btn btn-sm btn-success">➕ Add New Account</a>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No account groups found.</div>
+}
+else
+{
+    <div class="row">
+        <!-- 🔹 Balance Sheet Column -->
+        <div class="col-md-6">
+            <h4 class="text-dark border-bottom pb-1 mb-3">📘 Balance Sheet</h4>
+            @foreach (var group in balanceSheetGroups)
+            {
+                <div class="card border border-1 mb-3">
+                    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>@group.GroupCode - @group.GroupName</strong>
+                            <span class="badge bg-secondary ms-2">@group.StatementType</span>
+                        </div>
+                        <div>
+                            <a href="/AccountGroups/Edit/@group.GroupId" class="btn btn-sm btn-outline-primary me-2">✏️ Edit</a>
+                            <a href="/AccountGroups/Delete/@group.GroupId" class="btn btn-sm btn-outline-danger">🗑 Delete</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        @if (group.Accounts?.Any() ?? false)
+                        {
+                            <table class="table table-sm table-bordered align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Title</th>
+                                        <th>Status</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var acc in group.Accounts)
+                                    {
+                                        <tr>
+                                            <td>@acc.AccountCode</td>
+                                            <td>@acc.Title</td>
+                                            <td>
+                                                <span class="badge @(acc.IsActive ? "bg-success" : "bg-danger")">
+                                                    @(acc.IsActive ? "Active" : "Inactive")
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="/Accounts/Edit/@acc.Id" class="btn btn-sm btn-outline-info me-1">✏️</a>
+                                                <a href="/Accounts/Delete/@acc.Id" class="btn btn-sm btn-outline-danger">🗑</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <div class="text-muted fst-italic">No accounts found in this group.</div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- 🔹 Profit & Loss Column -->
+        <div class="col-md-6">
+            <h4 class="text-dark border-bottom pb-1 mb-3">📘 Profit & Loss</h4>
+            @foreach (var group in pnlGroups)
+            {
+                <div class="card border border-1 mb-3">
+                    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>@group.GroupCode - @group.GroupName</strong>
+                            <span class="badge bg-secondary ms-2">@group.StatementType</span>
+                        </div>
+                        <div>
+                            <a href="/AccountGroups/Edit/@group.GroupId" class="btn btn-sm btn-outline-primary me-2">✏️ Edit</a>
+                            <a href="/AccountGroups/Delete/@group.GroupId" class="btn btn-sm btn-outline-danger">🗑 Delete</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        @if (group.Accounts?.Any() ?? false)
+                        {
+                            <table class="table table-sm table-bordered align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Title</th>
+                                        <th>Status</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var acc in group.Accounts)
+                                    {
+                                        <tr>
+                                            <td>@acc.AccountCode</td>
+                                            <td>@acc.Title</td>
+                                            <td>
+                                                <span class="badge @(acc.IsActive ? "bg-success" : "bg-danger")">
+                                                    @(acc.IsActive ? "Active" : "Inactive")
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="/Accounts/Edit/@acc.Id" class="btn btn-sm btn-outline-info me-1">✏️</a>
+                                                <a href="/Accounts/Delete/@acc.Id" class="btn btn-sm btn-outline-danger">🗑</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <div class="text-muted fst-italic">No accounts found in this group.</div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}

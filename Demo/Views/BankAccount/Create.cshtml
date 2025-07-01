@@ -1,0 +1,29 @@
+﻿@model Demo.Models.BankAccount
+@{
+    ViewData["Title"] = "Create Bank Account";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-primary mb-3">➕ Add Bank Account</h2>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="BankAccountName" class="form-label"></label>
+        <input asp-for="BankAccountName" class="form-control" />
+        <span asp-validation-for="BankAccountName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="OpeningBalance" class="form-label"></label>
+        <input asp-for="OpeningBalance" class="form-control" value="0" />
+        <span asp-validation-for="OpeningBalance" class="text-danger"></span>
+    </div>
+
+    <div class="form-check mb-3">
+        <input asp-for="TransferFullAmount" class="form-check-input" />
+        <label asp-for="TransferFullAmount" class="form-check-label"></label>
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Back</a>
+</form>

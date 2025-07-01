@@ -1,0 +1,41 @@
+﻿@model Demo.Models.ServiceCategory
+
+@{
+    ViewData["Title"] = "Edit Category";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="mb-4 text-warning">✏️ Edit Service Category</h2>
+
+<form asp-action="Edit" method="post" class="row g-3">
+    <input type="hidden" asp-for="CategoryId" />
+
+    <div class="col-md-6">
+        <label asp-for="CategoryName" class="form-label"></label>
+        <input asp-for="CategoryName" class="form-control" />
+        <span asp-validation-for="CategoryName" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="Status" class="form-label"></label>
+        <select asp-for="Status" class="form-select">
+            <option value="">-- Select Status --</option>
+            <option value="Active" selected="@Model.Status == " Active"">Active</option>
+            <option value="Inactive" selected="@Model.Status == " Inactive"">Inactive</option>
+        </select>
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+    <div class="col-12">
+        <label asp-for="Remarks" class="form-label"></label>
+        <textarea asp-for="Remarks" class="form-control" rows="3"></textarea>
+    </div>
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">💾 Update</button>
+        <a asp-action="Index" class="btn btn-secondary">↩️ Back</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

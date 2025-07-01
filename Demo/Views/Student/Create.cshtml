@@ -1,0 +1,227 @@
+﻿@model Demo.Models.Student
+
+@{
+    ViewData["Title"] = "Add Student";
+    Layout = "~/Views/Shared/_Business.cshtml";
+}
+
+<h2 class="mb-4 text-primary">➕ Add Student</h2>
+
+<form asp-action="Create" method="post">
+    <div class="row g-3">
+
+        <!-- Academic Info -->
+        <div class="col-md-4">
+            <label asp-for="AdmissionNo" class="form-label"></label>
+            <input asp-for="AdmissionNo" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="AdmissionDate" class="form-label"></label>
+            <input asp-for="AdmissionDate" type="date" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="AcademicYearId" class="form-label"></label>
+            <select asp-for="AcademicYearId" class="form-select" asp-items="Model.AcademicYears"></select>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="CourseId" class="form-label"></label>
+            <select asp-for="CourseId" class="form-select" asp-items="Model.Courses"></select>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="StudentCategoryId" class="form-label"></label>
+            <select asp-for="StudentCategoryId" class="form-select" asp-items="Model.StudentCategories"></select>
+        </div>
+
+        <!-- Personal Info -->
+        <div class="col-md-4">
+            <label asp-for="StudentName" class="form-label"></label>
+            <input asp-for="StudentName" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="PersonalEmail" class="form-label"></label>
+            <input asp-for="PersonalEmail" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Gender" class="form-label"></label>
+            <select asp-for="Gender" class="form-select" asp-items="Model.Genders"></select>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="DateOfBirth" class="form-label"></label>
+            <input asp-for="DateOfBirth" type="date" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Nationality" class="form-label"></label>
+            <select asp-for="Nationality" class="form-select" asp-items="Model.Nationalities"></select>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Religion" class="form-label"></label>
+            <input asp-for="Religion" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="StudentMobile" class="form-label"></label>
+            <input asp-for="StudentMobile" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="BirthPlace" class="form-label"></label>
+            <input asp-for="BirthPlace" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="MotherTongue" class="form-label"></label>
+            <input asp-for="MotherTongue" class="form-control" />
+        </div>
+
+        <!-- Family Info -->
+        <div class="col-md-4">
+            <label asp-for="CNIC" class="form-label"></label>
+            <input asp-for="CNIC" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="FatherName" class="form-label"></label>
+            <input asp-for="FatherName" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="RelationToStudent" class="form-label"></label>
+            <input asp-for="RelationToStudent" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="FatherOccupation" class="form-label"></label>
+            <input asp-for="FatherOccupation" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="FatherMobile" class="form-label"></label>
+            <input asp-for="FatherMobile" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="FatherEmail" class="form-label"></label>
+            <input asp-for="FatherEmail" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="FatherAddressBuilding" class="form-label"></label>
+            <input asp-for="FatherAddressBuilding" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="FatherStreetAddress" class="form-label"></label>
+            <input asp-for="FatherStreetAddress" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="FatherCity" class="form-label"></label>
+            <input asp-for="FatherCity" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="StudentMaritalStatus" class="form-label"></label>
+            <input asp-for="StudentMaritalStatus" class="form-control" />
+        </div>
+
+        <!-- Fee Info -->
+        <div class="col-md-4">
+            <label asp-for="TuitionFeeId" class="form-label"></label>
+            <select id="TuitionFeeId" asp-for="TuitionFeeId" class="form-select">
+                @Html.Raw(string.Join("", Model.FeeServices.Select(item =>
+                $"<option value='{item.Value}' data-amount='{item.Text}' {(item.Selected ? "selected" : "")}>{item.Text}</option>"
+                                )))
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="DiscountId" class="form-label"></label>
+            <select id="DiscountId" asp-for="DiscountId" class="form-select">
+                @Html.Raw(string.Join("", Model.FeeDiscounts.Select(item =>
+                                $"<option value='{item.Value}' data-discount='{item.Text}' {(item.Selected ? "selected" : "")}>{item.Text}</option>"
+                                )))
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="AfterDiscountAmount" class="form-label"></label>
+            <input asp-for="AfterDiscountAmount" class="form-control" id="AfterDiscountAmount" readonly />
+        </div>
+        <!-- Transport Fee Toggle -->
+        <div class="col-12 mb-2">
+            <label class="form-label fw-bold">Transport Fee</label>
+            <button type="button" class="btn btn-sm btn-outline-primary ms-2" id="toggleTransportFee">+</button>
+        </div>
+
+        <div id="transportFeeSection" style="display:none;">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label asp-for="TransportFee" class="form-label"></label>
+                    <input asp-for="TransportFee" class="form-control" id="TransportFee" />
+                    <span asp-validation-for="TransportFee" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hostel Fee Toggle -->
+        <div class="col-12 mb-2">
+            <label class="form-label fw-bold">Hostel Fee</label>
+            <button type="button" class="btn btn-sm btn-outline-primary ms-2" id="toggleHostelFee">+</button>
+        </div>
+
+        <div id="hostelFeeSection" style="display:none;">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label asp-for="HostelFee" class="form-label"></label>
+                    <input asp-for="HostelFee" class="form-control" id="HostelFee" />
+                    <span asp-validation-for="HostelFee" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="TotalFee" class="form-label"></label>
+            <input asp-for="TotalFee" class="form-control" id="TotalFee" readonly />
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a asp-action="Index" class="btn btn-secondary">↩ Cancel</a>
+        <button type="submit" class="btn btn-success">💾 Save</button>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        function calculateFees() {
+            const tuitionFee = parseFloat(document.querySelector('#TuitionFeeId option:checked')?.getAttribute('data-amount')) || 0;
+            const discountValue = document.querySelector('#DiscountId option:checked')?.getAttribute('data-discount') || "0";
+            const transportFee = parseFloat(document.getElementById('TransportFee')?.value || 0);
+            const hostelFee = parseFloat(document.getElementById('HostelFee')?.value || 0);
+
+            let afterDiscount = 0;
+
+            if (discountValue.trim().endsWith('%')) {
+                const percent = parseFloat(discountValue.replace('%', ''));
+                afterDiscount = tuitionFee - (tuitionFee * percent / 100);
+            } else {
+                const fixedAmount = parseFloat(discountValue);
+                afterDiscount = tuitionFee - fixedAmount;
+            }
+
+            const totalFee = afterDiscount + transportFee + hostelFee;
+            document.getElementById('AfterDiscountAmount').value = afterDiscount.toFixed(2);
+            document.getElementById('TotalFee').value = totalFee.toFixed(2);
+        }
+
+        document.getElementById('TuitionFeeId').addEventListener('change', calculateFees);
+        document.getElementById('DiscountId').addEventListener('change', calculateFees);
+        document.getElementById('TransportFee').addEventListener('input', calculateFees);
+        document.getElementById('HostelFee').addEventListener('input', calculateFees);
+        window.addEventListener('DOMContentLoaded', calculateFees);
+
+        // Individual toggle handlers
+        document.getElementById("toggleTransportFee").addEventListener("click", function () {
+            const section = document.getElementById("transportFeeSection");
+            const isVisible = section.style.display === "block";
+            section.style.display = isVisible ? "none" : "block";
+            this.textContent = isVisible ? "+" : "−";
+        });
+
+        document.getElementById("toggleHostelFee").addEventListener("click", function () {
+            const section = document.getElementById("hostelFeeSection");
+            const isVisible = section.style.display === "block";
+            section.style.display = isVisible ? "none" : "block";
+            this.textContent = isVisible ? "+" : "−";
+        });
+    </script>
+
+}

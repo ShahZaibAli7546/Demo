@@ -1,0 +1,17 @@
+﻿@model Demo.Models.WeekendHalfDaySetup
+@{
+    ViewData["Title"] = "Delete Setup";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-danger mb-4">❌ Confirm Delete</h2>
+
+<div class="alert alert-warning">
+    Are you sure you want to delete this setup for campus ID <strong>@Model.CampusId</strong>?
+</div>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">🗑 Delete</button>
+    <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
+</form>

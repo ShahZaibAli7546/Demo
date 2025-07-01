@@ -1,0 +1,45 @@
+﻿@model Demo.Models.UpdateTransportFee
+@{
+    ViewData["Title"] = "Add Transport Fee";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-primary mb-4">➕ Add Transport Fee</h2>
+
+<form asp-action="Create" method="post">
+    <div class="row g-3 mb-3">
+        <div class="col-md-4">
+            <label asp-for="CampusId" class="form-label">Campus</label>
+            <select asp-for="CampusId" class="form-select" asp-items="ViewBag.Campuses"></select>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="BatchId" class="form-label">Batch</label>
+            <select asp-for="BatchId" class="form-select" asp-items="ViewBag.Batches"></select>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="FeeServiceId" class="form-label">Fee Service</label>
+            <select asp-for="FeeServiceId" class="form-select" asp-items="ViewBag.FeeServices"></select>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="SelectType" class="form-label">Select Type</label>
+            <select asp-for="SelectType" class="form-select">
+                <option>Amount Base</option>
+                <option>Percentage Base</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Amount" class="form-label">Amount</label>
+            <input asp-for="Amount" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Status" class="form-label">Status</label>
+            <select asp-for="Status" class="form-select">
+                <option>Active</option>
+                <option>Inactive</option>
+            </select>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success">💾 Save</button>
+    <a asp-action="Index" class="btn btn-secondary">↩️ Back</a>
+</form>

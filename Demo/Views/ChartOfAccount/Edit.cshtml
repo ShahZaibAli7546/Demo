@@ -1,0 +1,67 @@
+﻿@model Demo.Models.ChartOfAccount
+@{
+    ViewData["Title"] = "Edit Chart of Account";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-primary mb-4">✏️ Edit Account</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="AccountId" />
+
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ParentAccountId" class="form-label">Select Group</label>
+        <select asp-for="ParentAccountId" class="form-select">
+            <option value="">-- Select Group --</option>
+            @foreach (var group in ViewBag.Groups as List<SelectListItem>)
+            {
+                <option value="@group.Value" selected="@(Model.ParentAccountId == int.Parse(group.Value) ? "selected" : null)">
+                    @group.Text
+                </option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="GroupHead" class="form-label">Group Head</label>
+        <select asp-for="GroupHead" class="form-select">
+            <option>Assets</option>
+            <option>Liabilities</option>
+            <option>Equity</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="AccountType" class="form-label">Account Type</label>
+        <select asp-for="AccountType" class="form-select">
+            <option>Debit</option>
+            <option>Credit</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="StartingBalance" class="form-label"></label>
+        <input asp-for="StartingBalance" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Status" class="form-label"></label>
+        <select asp-for="Status" class="form-select">
+            <option>Active</option>
+            <option>Inactive</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">💾 Update</button>
+    <a asp-action="Index" class="btn btn-secondary">↩️ Back</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

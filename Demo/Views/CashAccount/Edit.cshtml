@@ -1,0 +1,31 @@
+﻿@model Demo.Models.CashAccount
+@{
+    ViewData["Title"] = "Edit Cash Account";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-primary mb-3">✏️ Edit Cash Account</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label asp-for="CashAccountName" class="form-label"></label>
+        <input asp-for="CashAccountName" class="form-control" />
+        <span asp-validation-for="CashAccountName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="OpeningBalance" class="form-label"></label>
+        <input asp-for="OpeningBalance" class="form-control" />
+        <span asp-validation-for="OpeningBalance" class="text-danger"></span>
+    </div>
+
+    <div class="form-check mb-3">
+        <input asp-for="TransferFullAmount" class="form-check-input" />
+        <label asp-for="TransferFullAmount" class="form-check-label"></label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

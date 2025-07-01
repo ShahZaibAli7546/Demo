@@ -1,0 +1,275 @@
+﻿@model Demo.Models.SchoolGeneralSettings
+
+@{
+    ViewData["Title"] = "School General Settings";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="mb-4 text-primary">🏫 School General Settings</h2>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">@TempData["Message"]</div>
+}
+
+<form asp-action="Save" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">General Information</div>
+        <div class="card-body row g-3">
+            <div class="col-md-6">
+                <label asp-for="SchoolName" class="form-label"></label>
+                <input asp-for="SchoolName" class="form-control" />
+            </div>
+            <div class="col-md-6">
+                <label asp-for="InstitutionType" class="form-label"></label>
+                <select asp-for="InstitutionType" class="form-select">
+                    <option value="">-- Select --</option>
+                    <option value="School">School</option>
+                    <option value="College">College</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="SchoolAbbreviation" class="form-label"></label>
+                <input asp-for="SchoolAbbreviation" class="form-control" />
+            </div>
+           
+            <div class="col-md-6">
+                <label class="form-label">School Tagline</label>
+                <input name="SchoolTagline" class="form-control" />
+            </div>
+            <div class="col-md-6">
+                <label asp-for="BankName" class="form-label"></label>
+                <input asp-for="BankName" class="form-control" />
+            </div>
+            <div class="col-md-6">
+                <label asp-for="AccountNumber" class="form-label"></label>
+                <input asp-for="AccountNumber" class="form-control" />
+            </div>
+            <div class="col-md-6">
+                <label asp-for="IbanNumber" class="form-label"></label>
+                <input asp-for="IbanNumber" class="form-control" />
+            </div>
+            <div class="col-md-6">
+                <label asp-for="Address" class="form-label">School Address</label>
+                <input asp-for="Address" class="form-control" />
+            </div>
+            <!-- 📷 Logo Uploads -->
+            <div class="col-md-4">
+                <label class="form-label">Logo 1</label>
+                <input type="file" name="Logo1File" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Logo 2</label>
+                <input type="file" name="Logo2File" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Paid Stamp</label>
+                <input type="file" name="PaidStampFile" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Report Header</label>
+                <input type="file" name="ReportHeaderFile" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Report Card Background</label>
+                <input type="file" name="ReportCardBackgroundFile" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Principal Signature Logo</label>
+                <input type="file" name="PrincipalSignatureLogoFile" class="form-control" />
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">School Controls</div>
+        <div class="card-body row g-3">
+            <div class="col-md-4">
+                <label asp-for="AdmissionNoPrefix" class="form-label"></label>
+                <input asp-for="AdmissionNoPrefix" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label asp-for="AdmissionNoPostfix" class="form-label"></label>
+                <input asp-for="AdmissionNoPostfix" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Fee Criteria Type</label>
+                <select asp-for="InstitutionFeeCriteriaType" class="form-select" id="criteriaTypeSelector">
+                    <option value="Service">Fee Service Based</option>
+                    <option value="Structure">Fee Structure Based</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="PreAdmissionNoPrefix" class="form-label"></label>
+                <input asp-for="PreAdmissionNoPrefix" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label asp-for="PreAdmissionNoPostfix" class="form-label"></label>
+                <input asp-for="PreAdmissionNoPostfix" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label asp-for="PaymentReceiptFormat" class="form-label"></label>
+                <input asp-for="PaymentReceiptFormat" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label asp-for="FamilyWisePaymentReceiptFormat" class="form-label"></label>
+                <input asp-for="FamilyWisePaymentReceiptFormat" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label asp-for="AdmissionFormFormat" class="form-label"></label>
+                <input asp-for="AdmissionFormFormat" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label asp-for="ReceiptsAndPaymentsFormat" class="form-label"></label>
+                <input asp-for="ReceiptsAndPaymentsFormat" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label asp-for="AssessmentTypeForApp" class="form-label"></label>
+                <input asp-for="AssessmentTypeForApp" class="form-control" />
+            </div>
+            <div class="col-md-4 d-flex align-items-center">
+                <div class="form-check">
+                    <input asp-for="CreateFeeVoucherWithZeroAmount" class="form-check-input me-2" type="checkbox" />
+                    <label asp-for="CreateFeeVoucherWithZeroAmount" class="form-check-label"></label>
+                </div>
+            </div>
+
+            <div class="col-md-4 d-flex align-items-center">
+                <div class="form-check">
+                    <input asp-for="InactiveBatchTimetableValidation" class="form-check-input me-2" type="checkbox" />
+                    <label asp-for="InactiveBatchTimetableValidation" class="form-check-label"></label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="EmployeeIdPrefix" class="form-label"></label>
+                <input asp-for="EmployeeIdPrefix" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label asp-for="EmployeeIdPostfix" class="form-label"></label>
+                <input asp-for="EmployeeIdPostfix" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label asp-for="RetirementAge" class="form-label"></label>
+                <input asp-for="RetirementAge" type="number" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label asp-for="SecurityPaymentReceiptFormat" class="form-label"></label>
+                <input asp-for="SecurityPaymentReceiptFormat" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label asp-for="GateAttendanceType" class="form-label"></label>
+                <input asp-for="GateAttendanceType" class="form-control" />
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-info text-white">Fee Voucher for App</div>
+        <div class="card-body row g-3">
+            <div class="col-md-4">
+                <label asp-for="FeeVoucherFormat" class="form-label"></label>
+                <input asp-for="FeeVoucherFormat" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label asp-for="ServiceType" class="form-label"></label>
+                <input asp-for="ServiceType" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label asp-for="BalanceChoice" class="form-label"></label>
+                <input asp-for="BalanceChoice" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label asp-for="FineType" class="form-label"></label>
+                <input asp-for="FineType" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label asp-for="DiscountType" class="form-label"></label>
+                <input asp-for="DiscountType" class="form-control" />
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-dark text-white">Auto SMS & App Notifications</div>
+        <div class="card-body row g-3">
+            <div class="col-md-6 form-check">
+                @Html.CheckBoxFor(m => m.MessageOnFeeReceive, new { @class = "form-check-input" })
+                @Html.LabelFor(m => m.MessageOnFeeReceive, new { @class = "form-check-label" })
+            </div>
+            <div class="col-md-6 form-check">
+                @Html.CheckBoxFor(m => m.MessageOnInquiry, new { @class = "form-check-input" })
+                @Html.LabelFor(m => m.MessageOnInquiry, new { @class = "form-check-label" })
+            </div>
+            <div class="col-md-6 form-check">
+                @Html.CheckBoxFor(m => m.MessageOnAdmission, new { @class = "form-check-input" })
+                @Html.LabelFor(m => m.MessageOnAdmission, new { @class = "form-check-label" })
+            </div>
+            <div class="col-md-6 form-check">
+                @Html.CheckBoxFor(m => m.MessageOnFeeReceiptInstallment, new { @class = "form-check-input" })
+                @Html.LabelFor(m => m.MessageOnFeeReceiptInstallment, new { @class = "form-check-label" })
+            </div>
+            <div class="col-md-6 form-check">
+                @Html.CheckBoxFor(m => m.MessageOnDailyAttendance, new { @class = "form-check-input" })
+                @Html.LabelFor(m => m.MessageOnDailyAttendance, new { @class = "form-check-label" })
+            </div>
+            <div class="col-md-6 form-check">
+                @Html.CheckBoxFor(m => m.MessageOfAttendanceFromTeacher, new { @class = "form-check-input" })
+                @Html.LabelFor(m => m.MessageOfAttendanceFromTeacher, new { @class = "form-check-label" })
+            </div>
+            <div class="col-md-6 form-check">
+                @Html.CheckBoxFor(m => m.AppNotificationOnComplainStatusChange, new { @class = "form-check-input" })
+                @Html.LabelFor(m => m.AppNotificationOnComplainStatusChange, new { @class = "form-check-label" })
+            </div>
+            <div class="col-md-6 form-check">
+                @Html.CheckBoxFor(m => m.AppNotificationOnDateAttendance, new { @class = "form-check-input" })
+                @Html.LabelFor(m => m.AppNotificationOnDateAttendance, new { @class = "form-check-label" })
+            </div>
+            <div class="col-md-6 form-check">
+                @Html.CheckBoxFor(m => m.AppNotificationOnStudentAttendanceSubjectBasis, new { @class = "form-check-input" })
+                @Html.LabelFor(m => m.AppNotificationOnStudentAttendanceSubjectBasis, new { @class = "form-check-label" })
+            </div>
+            <div class="col-md-6 form-check">
+                @Html.CheckBoxFor(m => m.SmsNotificationOnDateAttendance, new { @class = "form-check-input" })
+                @Html.LabelFor(m => m.SmsNotificationOnDateAttendance, new { @class = "form-check-label" })
+            </div>
+            <div class="col-md-6 form-check">
+                @Html.CheckBoxFor(m => m.AppNotificationOnNewAnnouncement, new { @class = "form-check-input" })
+                @Html.LabelFor(m => m.AppNotificationOnNewAnnouncement, new { @class = "form-check-label" })
+            </div>
+            <div class="col-md-6 form-check">
+                @Html.CheckBoxFor(m => m.AppNotificationOnBatchActivity, new { @class = "form-check-input" })
+                @Html.LabelFor(m => m.AppNotificationOnBatchActivity, new { @class = "form-check-label" })
+            </div>
+            <div class="col-md-6 form-check">
+                @Html.CheckBoxFor(m => m.AppNotificationOnMeeting, new { @class = "form-check-input" })
+                @Html.LabelFor(m => m.AppNotificationOnMeeting, new { @class = "form-check-label" })
+            </div>
+            <div class="col-md-6 form-check">
+                @Html.CheckBoxFor(m => m.AppNotificationOnApplication, new { @class = "form-check-input" })
+                @Html.LabelFor(m => m.AppNotificationOnApplication, new { @class = "form-check-label" })
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">📂 Save Settings</button>
+</form>
+@section Scripts {
+    <script>
+        // Optional: filter dropdown dynamically client-side
+        $('#criteriaTypeSelector').on('change', function () {
+            var selectedType = $(this).val();
+            $('select[name="InstitutionFeeCriteria"] option').each(function () {
+                var text = $(this).text();
+                if (selectedType === "Service" && text.startsWith("FeeStructure:")) {
+                    $(this).hide();
+                } else if (selectedType === "Structure" && text.startsWith("FeeServices:")) {
+                    $(this).hide();
+                } else {
+                    $(this).show();
+                }
+            });
+        }).trigger('change');
+    </script>
+}

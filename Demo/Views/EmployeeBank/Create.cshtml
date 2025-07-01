@@ -1,0 +1,38 @@
+﻿@model Demo.Models.EmployeeBank
+
+@{
+    ViewData["Title"] = "Add Bank Account";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-success mb-4">➕ Add Employee Bank Account</h2>
+
+<form asp-action="Create" method="post" class="row g-3">
+    <div class="col-md-6">
+        <label asp-for="EmployeeId" class="form-label fw-bold"></label>
+        <input asp-for="EmployeeId" class="form-control" />
+        <span asp-validation-for="EmployeeId" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="BankName" class="form-label fw-bold"></label>
+        <input asp-for="BankName" class="form-control" />
+        <span asp-validation-for="BankName" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="AccountNumber" class="form-label fw-bold"></label>
+        <input asp-for="AccountNumber" class="form-control" />
+        <span asp-validation-for="AccountNumber" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="BranchCode" class="form-label fw-bold"></label>
+        <input asp-for="BranchCode" class="form-control" />
+    </div>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-success">💾 Save</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>

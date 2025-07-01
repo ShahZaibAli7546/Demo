@@ -1,0 +1,29 @@
+﻿@model Demo.Models.CashAccount
+@{
+    ViewData["Title"] = "Create Cash Account";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-primary mb-3">➕ Add Cash Account</h2>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="CashAccountName" class="form-label"></label>
+        <input asp-for="CashAccountName" class="form-control" />
+        <span asp-validation-for="CashAccountName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="OpeningBalance" class="form-label"></label>
+        <input asp-for="OpeningBalance" class="form-control" value="0" />
+        <span asp-validation-for="OpeningBalance" class="text-danger"></span>
+    </div>
+
+    <div class="form-check mb-3">
+        <input asp-for="TransferFullAmount" class="form-check-input" />
+        <label asp-for="TransferFullAmount" class="form-check-label"></label>
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Back</a>
+</form>

@@ -1,0 +1,42 @@
+﻿@{
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+    ViewData["Title"] = "Control Panel";
+    var userEmail = ViewBag.UserEmail as string ?? "User";
+}
+
+<!-- ✅ Main Content -->
+<div class="flex-grow-1 p-4">
+    <h2 class="text-center mb-4">Admin Control Panel</h2>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow mb-4">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Students</h5>
+                    <p class="card-text">Manage student records</p>
+                    <a href="#" class="btn btn-primary">Go</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow mb-4">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Teachers</h5>
+                    <p class="card-text">Manage teacher profiles</p>
+                    <a href="#" class="btn btn-primary">Go</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow mb-4">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Settings</h5>
+                    <p class="card-text">System settings and configuration</p>
+                    <a href="/Account/Settings" class="btn btn-primary">Go</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

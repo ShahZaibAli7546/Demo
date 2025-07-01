@@ -1,0 +1,82 @@
+﻿@model Demo.Models.TimeTableManagement
+
+@{
+    ViewData["Title"] = "Edit Applied Time Table";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-primary mb-4">✏️ Edit Applied Time Table</h2>
+
+<form asp-action="EditApply" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="row g-3">
+
+        <!-- Campus Dropdown -->
+        <div class="col-md-6">
+            <label asp-for="CampusId" class="form-label">Select Campus</label>
+            <select asp-for="CampusId" asp-items="ViewBag.Campuses" class="form-select">
+                <option value="">-- Select Campus --</option>
+            </select>
+            <span asp-validation-for="CampusId" class="text-danger"></span>
+        </div>
+
+        <!-- Time Table -->
+        <div class="col-md-6">
+            <label asp-for="Id" class="form-label">Select Time Table</label>
+            <select asp-for="Id" asp-items="ViewBag.TimeTables" class="form-select">
+                <option value="">-- Select Time Table --</option>
+            </select>
+            <span asp-validation-for="Id" class="text-danger"></span>
+        </div>
+
+        <!-- Batch -->
+        <div class="col-md-6">
+            <label asp-for="SelectedBatchId" class="form-label">Select Batch</label>
+            <select asp-for="SelectedBatchId" class="form-select">
+                <option value="">-- Select Batch --</option>
+                <option value="Collective">Collective</option>
+                @foreach (var batch in (List<SelectListItem>)ViewBag.Batches)
+                {
+                    <option value="@batch.Value">@batch.Text</option>
+                }
+            </select>
+        </div>
+
+        <!-- Employee -->
+        <div class="col-md-6">
+            <label asp-for="SelectedEmployeeId" class="form-label">Select Employee</label>
+            <select asp-for="SelectedEmployeeId" class="form-select">
+                <option value="">-- Select Employee --</option>
+                <option value="Collective">Collective</option>
+                @foreach (var emp in (List<SelectListItem>)ViewBag.Employees)
+                {
+                    <option value="@emp.Value">@emp.Text</option>
+                }
+            </select>
+        </div>
+
+        <!-- Start Date -->
+        <div class="col-md-6">
+            <label asp-for="StartDate" class="form-label">Start Date</label>
+            <input asp-for="StartDate" type="date" class="form-control" />
+            <span asp-validation-for="StartDate" class="text-danger"></span>
+        </div>
+
+        <!-- End Date -->
+        <div class="col-md-6">
+            <label asp-for="EndDate" class="form-label">End Date</label>
+            <input asp-for="EndDate" type="date" class="form-control" />
+            <span asp-validation-for="EndDate" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-success">💾 Update</button>
+        <a asp-action="Apply" class="btn btn-secondary ms-2">🔙 Back</a>
+    </div>
+</form>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

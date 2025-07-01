@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Demo.Models.RecurringPayslip>
+
+@{
+    ViewData["Title"] = "Recurring Payslips";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="mb-4 text-primary">📋 Recurring Payslips</h2>
+
+<a asp-action="Create" class="btn btn-success mb-3">➕ Create New Payslip</a>
+
+<table class="table table-bordered table-striped text-center">
+    <thead class="table-light">
+        <tr>
+            <th>#</th>
+            <th>Campus</th>
+            <th>Employee</th>
+            <th>Rate Type</th>
+            <th>Gross Pay</th>
+            <th>Deduction</th>
+            <th>Contribution</th>
+            <th>Net Pay</th>
+            <th>Loan Return</th>
+            <th style="width: 230px;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model?.Any() == true)
+        {
+            int index = 1;
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@index</td>
+                    <td>@item.CampusName</td> <!-- Assumes CampusName is included in model -->
+                    <td>@item.EmployeeName</td> <!-- Assumes EmployeeName is included in model -->
+                    <td>@item.RateType</td>
+                    <td>@item.GrossPay</td>
+                    <td>@item.TotalDeduction</td>
+                    <td>@item.TotalContribution</td>
+                    <td>@item.NetPay</td>
+                    <td>
+                        <span class="badge bg-@(item.LoanReturn ? "success" : "secondary")">
+                            @(item.LoanReturn ? "Yes" : "No")
+                        </span>
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary me-1">✏️ Edit</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this?');">🗑️ Delete</a>
+                    </td>
+                </tr>
+                index++;
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="10" class="text-muted text-center">No payslip records found.</td>
+            </tr>
+        }
+    </tbody>
+</table>

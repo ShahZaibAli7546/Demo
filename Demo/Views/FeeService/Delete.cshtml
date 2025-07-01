@@ -1,0 +1,28 @@
+﻿@model Demo.Models.FeeService
+
+@{
+    ViewData["Title"] = "Delete Fee Service";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-danger mb-4">🗑️ Delete Fee Service</h2>
+
+<div class="alert alert-warning">
+    <strong>Are you sure you want to delete this Fee Service?</strong>
+</div>
+
+<div class="card border-danger mb-4">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Service Name</dt>
+            <dd class="col-sm-9">@Model.FeeServiceName</dd>
+        </dl>
+    </div>
+</div>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="FeeServiceId" />
+
+    <button type="submit" class="btn btn-danger">🗑️ Confirm Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">🔙 Cancel</a>
+</form>

@@ -1,0 +1,127 @@
+﻿@model Demo.Models.TimeTableManagement
+
+@{
+    ViewData["Title"] = "Apply Time Table";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-primary mb-4">🕒 Apply Time Table</h2>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">@TempData["Message"]</div>
+}
+
+<form asp-action="Apply" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="row g-3">
+
+        <!-- Campus Dropdown -->
+        <div class="col-md-6">
+            <label asp-for="CampusId" class="form-label">Select Campus</label>
+            <select asp-for="CampusId" asp-items="ViewBag.Campuses" class="form-select" id="CampusId">
+                <option value="">-- Select Campus --</option>
+            </select>
+            <span asp-validation-for="CampusId" class="text-danger"></span>
+        </div>
+
+        <!-- Time Table Selection -->
+        <div class="col-md-6">
+            <label asp-for="Id" class="form-label">Select Time Table</label>
+            <select asp-for="Id" asp-items="ViewBag.TimeTables" class="form-select">
+                <option value="">-- Select Time Table --</option>
+            </select>
+            <span asp-validation-for="Id" class="text-danger"></span>
+        </div>
+
+        <!-- Batch Dropdown -->
+        <div class="col-md-6">
+            <label asp-for="SelectedBatchId" class="form-label">Select Batch</label>
+            <select asp-for="SelectedBatchId" class="form-select" id="BatchId">
+                <option value="">-- Select Batch --</option>
+                <option value="Collective">Collective</option>
+                @if (ViewBag.Batches != null)
+                {
+                    foreach (var batch in (List<SelectListItem>)ViewBag.Batches)
+                    {
+                        <option value="@batch.Value">@batch.Text</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <!-- Employee Dropdown -->
+        <div class="col-md-6">
+            <label asp-for="SelectedEmployeeId" class="form-label">Select Employee</label>
+            <select asp-for="SelectedEmployeeId" class="form-select" id="EmployeeId">
+                <option value="">-- Select Employee --</option>
+                <option value="Collective">Collective</option>
+                @if (ViewBag.Employees != null)
+                {
+                    foreach (var emp in (List<SelectListItem>)ViewBag.Employees)
+                    {
+                        <option value="@emp.Value">@emp.Text</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <!-- Start Date -->
+        <div class="col-md-6">
+            <label asp-for="StartDate" class="form-label">Start Date</label>
+            <input asp-for="StartDate" type="date" class="form-control" />
+            <span asp-validation-for="StartDate" class="text-danger"></span>
+        </div>
+
+        <!-- End Date -->
+        <div class="col-md-6">
+            <label asp-for="EndDate" class="form-label">End Date</label>
+            <input asp-for="EndDate" type="date" class="form-control" />
+            <span asp-validation-for="EndDate" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary">✅ Apply Time Table</button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">🔙 Back</a>
+    </div>
+</form>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script>
+        $(document).ready(function () {
+            $('#CampusId').change(function () {
+                var campusId = $(this).val();
+                if (campusId) {
+                    $.ajax({
+                        url: '/TimeTableManagement/GetBatchesAndEmployeesByCampus',
+                        type: 'GET',
+                        data: { campusId: campusId },
+                        success: function (response) {
+                            // Batches
+                            var batchSelect = $('#BatchId');
+                            batchSelect.empty();
+                            batchSelect.append('<option value="">-- Select Batch --</option>');
+                            batchSelect.append('<option value="Collective">Collective</option>');
+                            $.each(response.batches, function (i, item) {
+                                batchSelect.append('<option value="' + item.value + '">' + item.text + '</option>');
+                            });
+
+                            // Employees
+                            var empSelect = $('#EmployeeId');
+                            empSelect.empty();
+                            empSelect.append('<option value="">-- Select Employee --</option>');
+                            empSelect.append('<option value="Collective">Collective</option>');
+                            $.each(response.employees, function (i, item) {
+                                empSelect.append('<option value="' + item.value + '">' + item.text + '</option>');
+                            });
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

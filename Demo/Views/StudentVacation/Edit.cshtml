@@ -1,0 +1,99 @@
+﻿@model Demo.Models.StudentVacation
+
+@{
+    ViewData["Title"] = "Edit Student Vacation";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-primary mb-4">✏️ Edit Vacation / Holiday</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+<form asp-action="Edit" method="post" class="row g-3" novalidate>
+    @* 'novalidate' for testing, remove later *@
+    @Html.AntiForgeryToken() @* Required for form security *@
+    <input type="hidden" asp-for="Id" />
+
+    <div class="col-md-6">
+        <label asp-for="VacationTitle" class="form-label"></label>
+        <input asp-for="VacationTitle" class="form-control" />
+        <span asp-validation-for="VacationTitle" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="StartDate" class="form-label"></label>
+        <input asp-for="StartDate" class="form-control" type="date" />
+        <span asp-validation-for="StartDate" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="EndDate" class="form-label"></label>
+        <input asp-for="EndDate" class="form-control" type="date" />
+        <span asp-validation-for="EndDate" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-12">
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="BackgroundColor" class="form-label">Background Color</label>
+        <select asp-for="BackgroundColor" class="form-select" asp-items="new SelectList(ViewBag.Colors)">
+            <option value="">-- Select Color --</option>
+        </select>
+        <span asp-validation-for="BackgroundColor" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="Symbol" class="form-label">Symbol</label>
+        <input asp-for="Symbol" class="form-control" placeholder="e.g. 🌴 or *" />
+        <span asp-validation-for="Symbol" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="Campus" class="form-label"></label>
+        <select asp-for="Campus" class="form-select" asp-items="new SelectList(ViewBag.Campuses)">
+            <option value="">-- Select Campus --</option>
+        </select>
+        <span asp-validation-for="Campus" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="Status" class="form-label"></label>
+        <select asp-for="Status" class="form-select" asp-items="new SelectList(ViewBag.Statuses)">
+            <option value="">-- Select Status --</option>
+        </select>
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="Batch" class="form-label"></label>
+        <select asp-for="Batch" class="form-select" asp-items="new SelectList(ViewBag.Batches)">
+            <option value="">-- Select Batch --</option>
+        </select>
+        <span asp-validation-for="Batch" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-3">
+        <div class="form-check mt-4">
+            <input asp-for="ApplyOnWeekend" class="form-check-input" type="checkbox" />
+            <label class="form-check-label" asp-for="ApplyOnWeekend">
+                Apply on Weekend?
+            </label>
+        </div>
+    </div>
+
+    <div class="col-12 mt-4">
+        <button type="submit" class="btn btn-primary">💾 Update Vacation</button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">🔙 Cancel</a>
+    </div>
+</form>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

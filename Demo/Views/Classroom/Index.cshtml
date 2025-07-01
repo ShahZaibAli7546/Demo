@@ -1,0 +1,77 @@
+﻿@model List<Demo.Models.Classroom>
+@{
+    ViewData["Title"] = "Classrooms";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+    int sn = 1; // ✅ Move this here
+}
+
+<h2 class="text-primary mb-3">🏫 Classroom List</h2>
+
+<a asp-action="Create" class="btn btn-success mb-3">➕ Add New Classroom</a>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Class Name</th>
+            <th>Status</th>
+            <th>QR Code</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @{
+                            var currentSn = sn; sn++;
+                        }
+                        @currentSn
+                    </td>
+                    <td>@item.ClassName</td>
+                    <td>@item.Status</td>
+                    <td>
+    @if (!string.IsNullOrEmpty(item.QRCodeLink))
+    {
+        <a href="javascript:void(0);" class="qr-toggle" data-id="@item.ClassId">View QR Code</a>
+
+        <div id="qr-@item.ClassId" class="mt-2 d-none">
+            <img src="@Url.Action("GenerateQRCode", "Classroom", new { qrText = item.QRCodeLink })" width="150" class="mb-2" />
+            <div class="text-success fw-bold">Please mark the attendance.</div>
+        </div>
+    }
+    else
+    {
+        <span class="text-muted">No QR Code</span>
+    }
+</td>
+
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ClassId" class="btn btn-sm btn-warning">✏️ Edit</a>
+                        <a asp-action="Delete" asp-route-id="@item.ClassId" class="btn btn-sm btn-danger">🗑️ Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr><td colspan="5" class="text-center text-muted">No records found.</td></tr>
+        }
+    </tbody>
+</table>
+@section Scripts {
+    <script>
+        document.querySelectorAll(".qr-toggle").forEach(link => {
+            link.addEventListener("click", function () {
+                const id = this.getAttribute("data-id");
+                const qrDiv = document.getElementById("qr-" + id);
+                if (qrDiv) {
+                    qrDiv.classList.toggle("d-none");
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,38 @@
+﻿@model List<Demo.Models.Student>
+
+@{
+    ViewData["Title"] = "Student List";
+    Layout = "~/Views/Shared/_Business.cshtml";
+}
+
+<h2 class="mb-3">👨‍🎓 Student List</h2>
+<a asp-action="Create" class="btn btn-primary mb-3">➕ Add New Student</a>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Admission No</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Mobile</th>
+            <th>Total Fee</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model)
+        {
+            <tr>
+                <td>@student.AdmissionNo</td>
+                <td>@student.StudentName</td>
+                <td>@student.Gender</td>
+                <td>@student.StudentMobile</td>
+                <td>@student.TotalFee.ToString("C")</td>
+                <td>
+                    <a asp-action="Edit" asp-route-admissionNo="@student.AdmissionNo" class="btn btn-sm btn-warning">✏️ Edit</a>
+                    <a asp-action="Delete" asp-route-admissionNo="@student.AdmissionNo" class="btn btn-sm btn-danger">🗑️ Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

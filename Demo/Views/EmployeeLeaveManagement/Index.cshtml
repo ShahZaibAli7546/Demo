@@ -1,0 +1,151 @@
+﻿@model Demo.Models.EmployeeLeaveManagementViewModel
+@{
+    ViewData["Title"] = "Employee Leave Management";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-primary mb-4">👨‍💼 Employee Leave Management</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<div class="row">
+    <!-- Leave Allotment Form -->
+    <div class="col-md-6">
+        <h4 class="text-success">➕ Add Leave Allotment</h4>
+        <form asp-action="CreateAllotment" method="post" class="row g-3">
+            <div class="col-md-6">
+                <label asp-for="LeaveAllotments[0].CampusId" class="form-label fw-bold">Campus</label>
+                <select asp-for="LeaveAllotments[0].CampusId" asp-items="ViewBag.Campuses" class="form-select">
+                    <option value="">-- Select Campus --</option>
+                </select>
+                <span asp-validation-for="LeaveAllotments[0].CampusId" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="LeaveAllotments[0].EmployeeId" class="form-label fw-bold">Employee</label>
+                <select asp-for="LeaveAllotments[0].EmployeeId" asp-items="ViewBag.Employees" class="form-select">
+                    <option value="">-- Select Employee --</option>
+                </select>
+                <span asp-validation-for="LeaveAllotments[0].EmployeeId" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="LeaveAllotments[0].LeaveTypeId" class="form-label fw-bold">Leave Type</label>
+                <select asp-for="LeaveAllotments[0].LeaveTypeId" asp-items="ViewBag.LeaveTypes" class="form-select">
+                    <option value="">-- Select Type --</option>
+                </select>
+                <span asp-validation-for="LeaveAllotments[0].LeaveTypeId" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="LeaveAllotments[0].TotalDays" class="form-label fw-bold">Total Days</label>
+                <input asp-for="LeaveAllotments[0].TotalDays" class="form-control" />
+                <span asp-validation-for="LeaveAllotments[0].TotalDays" class="text-danger"></span>
+            </div>
+
+            <div class="col-12">
+                <label asp-for="LeaveAllotments[0].Remarks" class="form-label fw-bold">Remarks</label>
+                <input asp-for="LeaveAllotments[0].Remarks" class="form-control" />
+            </div>
+
+            <div class="col-12">
+                <button type="submit" class="btn btn-success">Save Allotment</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Leave Year Form -->
+    <div class="col-md-6">
+        <h4 class="text-info">➕ Add Leave Year</h4>
+        <form asp-action="CreateLeaveYear" method="post" class="row g-3">
+            <div class="col-md-12">
+                <label asp-for="LeaveYears[0].Title" class="form-label fw-bold">Title</label>
+                <input asp-for="LeaveYears[0].Title" class="form-control" />
+                <span asp-validation-for="LeaveYears[0].Title" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="LeaveYears[0].StartDate" class="form-label fw-bold">Start Date</label>
+                <input asp-for="LeaveYears[0].StartDate" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="LeaveYears[0].StartDate" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="LeaveYears[0].EndDate" class="form-label fw-bold">End Date</label>
+                <input asp-for="LeaveYears[0].EndDate" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="LeaveYears[0].EndDate" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-12">
+                <label asp-for="LeaveYears[0].Status" class="form-label fw-bold">Status</label>
+                <select asp-for="LeaveYears[0].Status" class="form-select">
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                </select>
+            </div>
+
+            <div class="col-12">
+                <button type="submit" class="btn btn-info">Save Year</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<hr />
+
+<!-- Display Table: Leave Allotments -->
+<h4 class="text-secondary mt-5">📋 Leave Allotments</h4>
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Campus ID</th>
+            <th>Employee ID</th>
+            <th>Leave Type</th>
+            <th>Total Days</th>
+            <th>Remarks</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.LeaveAllotments)
+        {
+            <tr>
+                <td>@item.CampusId</td>
+                <td>@item.EmployeeId</td>
+                <td>@item.LeaveTypeId</td>
+                <td>@item.TotalDays</td>
+                <td>@item.Remarks</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Display Table: Leave Years -->
+<h4 class="text-secondary mt-5">📅 Leave Years</h4>
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Start</th>
+            <th>End</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var year in Model.LeaveYears)
+        {
+            <tr>
+                <td>@year.Title</td>
+                <td>@year.Status</td>
+                <td>@year.StartDate.ToShortDateString()</td>
+                <td>@year.EndDate.ToShortDateString()</td>
+            </tr>
+        }
+    </tbody>
+</table>

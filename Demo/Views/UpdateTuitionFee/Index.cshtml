@@ -1,0 +1,140 @@
+﻿@model Demo.Models.TuitionFeeBatchViewModel
+
+@{
+    ViewData["Title"] = "Update Tuition Fee";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+
+    var campuses = ViewBag.Campuses as List<SelectListItem> ?? new List<SelectListItem>();
+    var batches = ViewBag.Batches as List<SelectListItem> ?? new List<SelectListItem>();
+    var feeServices = ViewBag.FeeServices as List<SelectListItem> ?? new List<SelectListItem>();
+    var discounts = ViewBag.Discounts as List<SelectListItem> ?? new List<SelectListItem>();
+}
+
+<h2 class="mb-4 text-primary">💰 Update Tuition Fee</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<form asp-action="Index" method="get" class="row g-3 mb-4">
+    <div class="col-md-4">
+        <label class="form-label">Select Campus</label>
+        <select class="form-select" name="campusId" onchange="this.form.submit()">
+            @foreach (var campus in campuses)
+            {
+                <option value="@campus.Value" selected="@(campus.Value == Model.SelectedCampusId.ToString() ? "selected" : null)">
+                    @campus.Text
+                </option>
+            }
+        </select>
+    </div>
+    <div class="col-md-4">
+        <label class="form-label">Select Batch</label>
+        <select class="form-select" name="batchId" onchange="this.form.submit()">
+            <option value="">-- Select Batch --</option>
+            @foreach (var batch in batches)
+            {
+                <option value="@batch.Value" selected="@(batch.Value == Model.SelectedBatchId.ToString() ? "selected" : null)">
+                    @batch.Text
+                </option>
+            }
+        </select>
+    </div>
+</form>
+
+@if (Model.Students.Any())
+{
+    <form asp-action="Save" method="post">
+        @Html.HiddenFor(m => m.SelectedCampusId)
+        @Html.HiddenFor(m => m.SelectedBatchId)
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label class="form-label fw-bold">📌 Global Fee Service</label>
+                <select class="form-select" id="globalFeeService">
+                    <option value="">-- Select Fee Service --</option>
+                    @foreach (var fs in feeServices)
+                    {
+                        <option value="@fs.Value">@fs.Text</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label fw-bold">📌 Global Discount</label>
+                <select class="form-select" id="globalDiscount">
+                    <option value="">-- Select Discount --</option>
+                    @foreach (var dis in discounts)
+                    {
+                        <option value="@dis.Value">@dis.Text</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-4 d-flex align-items-end">
+                <button type="button" class="btn btn-outline-primary w-100" onclick="applyGlobalSelection()">Apply to All</button>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-striped">
+            <thead class="table-light">
+                <tr>
+                    <th>Student ID</th>
+                    <th>Student Name</th>
+                    <th>Father Name</th>
+                    <th>Fee Service</th>
+                    <th>Discount</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Students.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.HiddenFor(m => m.Students[i].StudentId)
+                            @Model.Students[i].StudentId
+                        </td>
+                        <td>@Model.Students[i].StudentName</td>
+                        <td>@Model.Students[i].FatherName</td>
+                        <td>
+                            @Html.DropDownListFor(m => m.Students[i].FeeServiceId, feeServices, "-- Select Service --", new { @class = "form-select feeService" })
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(m => m.Students[i].DiscountId, discounts, "-- Select Discount --", new { @class = "form-select discount" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(m => m.Students[i].Amount, new { @class = "form-control", type = "number", step = "0.01" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <button type="submit" class="btn btn-success">💾 Save Changes</button>
+    </form>
+}
+else if (Model.SelectedBatchId > 0)
+{
+    <div class="alert alert-info">No students found for this batch.</div>
+}
+
+@section Scripts {
+    <script>
+        function applyGlobalSelection() {
+            const globalFeeService = document.getElementById('globalFeeService').value;
+            const globalDiscount = document.getElementById('globalDiscount').value;
+
+            document.querySelectorAll('.feeService').forEach(select => {
+                if (globalFeeService) select.value = globalFeeService;
+            });
+
+            document.querySelectorAll('.discount').forEach(select => {
+                if (globalDiscount) select.value = globalDiscount;
+            });
+        }
+    </script>
+}

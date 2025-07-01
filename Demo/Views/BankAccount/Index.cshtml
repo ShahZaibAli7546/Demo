@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Demo.Models.BankAccount>
+@{
+    ViewData["Title"] = "Bank Accounts";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="mb-4 text-primary">💵 Cash Accounts</h2>
+
+@await Html.PartialAsync("_AccountTabs")
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<a asp-action="Create" class="btn btn-success mb-3">➕ Add Bank Account</a>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Bank Account Name</th>
+            <th>Opening Balance</th>
+            <th>Transfer Full Amount</th>
+            <th style="width:120px;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr><td colspan="5" class="text-center">No records found.</td></tr>
+        }
+        else
+        {
+            int index = 1;
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@index</td>
+                    <td>@item.BankAccountName</td>
+                    <td>@item.OpeningBalance.ToString("C")</td>
+                    <td>@(item.TransferFullAmount ? "✅" : "❌")</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary">✏️</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">🗑️</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<div class="alert alert-info mt-3">
+    <strong>Total Balance:</strong> @ViewBag.TotalBalance.ToString("C")
+</div>

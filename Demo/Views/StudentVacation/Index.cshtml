@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Demo.Models.StudentVacation>
+
+@{
+    ViewData["Title"] = "Student Vacations";
+}
+
+<h2 class="mb-4 text-primary">📅 Student Vacations & Holidays</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+<a asp-action="Create" class="btn btn-success mb-3">➕ Add New Vacation</a>
+
+<table class="table table-bordered table-hover shadow-sm">
+    <thead class="table-dark">
+        <tr>
+            <th>Title</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Campus</th>
+            <th>Status</th>
+            <th>Batch</th>
+            <th>Weekend?</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr style="background-color:@item.BackgroundColor">
+                <td>@item.VacationTitle @item.Symbol</td>
+                <td>@item.StartDate.ToShortDateString()</td>
+                <td>@item.EndDate.ToShortDateString()</td>
+                <td>@item.Campus</td>
+                <td>@item.Status</td>
+                <td>@item.Batch</td>
+                <td>@(item.ApplyOnWeekend ? "✔" : "❌")</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">View</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

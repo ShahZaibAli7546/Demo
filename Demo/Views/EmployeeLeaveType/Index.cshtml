@@ -1,0 +1,51 @@
+﻿@model List<Demo.Models.EmployeeLeaveType>
+@{
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+    ViewData["Title"] = "Employee Leave Types";
+}
+
+<h2 class="text-primary mb-4">📋 Employee Leave Types</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+<a asp-action="Create" class="btn btn-success mb-3">
+    <i class="bi bi-plus-circle"></i> Add Leave Type
+</a>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-light">
+        <tr>
+            <th>Name</th>
+            <th>Symbol</th>
+            <th>Weightage</th>
+            <th>Color</th>
+            <th>Status</th>
+            <th class="text-center" style="width: 150px;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr style="background-color:@item.BackgroundColor">
+                <td>@item.Name</td>
+                <td>@item.Symbol</td>
+                <td>@item.Weightage</td>
+                <td>
+                    <div style="width: 25px; height: 25px; border-radius: 4px; background-color:@item.BackgroundColor; border:1px solid #ccc;"></div>
+                </td>
+                <td>@item.Status</td>
+                <td class="text-center">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger ms-1">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

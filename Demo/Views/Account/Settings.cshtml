@@ -1,0 +1,321 @@
+﻿@{
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+    ViewData["Title"] = "Settings";
+}
+
+<style>
+    .settings-item {
+        width: 100%;
+        text-align: center;
+        text-decoration: none;
+        color: #333;
+        padding: 10px 5px;
+        transition: background-color 0.2s ease;
+    }
+
+    .settings-icon img {
+        width: 42px; /* 30% smaller */
+        height: 42px;
+        object-fit: contain;
+        margin-bottom: 6px;
+        transition: filter 0.2s ease;
+    }
+
+    .settings-label {
+        font-size: 13px;
+        font-weight: 500;
+        color: #444;
+    }
+
+    .settings-item:hover {
+        background-color: #e7f1ff; /* light navbar blue */
+    }
+
+        .settings-item:hover .settings-icon img {
+            filter: brightness(0) saturate(100%) invert(31%) sepia(84%) saturate(2837%) hue-rotate(201deg) brightness(96%) contrast(98%);
+        }
+</style>
+
+<h2 class="mb-2 text-primary">⚙️ System Settings</h2>
+<p class="text-muted mb-3">Choose a setting module to configure system preferences.</p>
+
+<div class="row row-cols-3 row-cols-sm-5 row-cols-md-7 row-cols-lg-9 g-0">
+    <!-- 🏫 School General Settings -->
+    <div class="col">
+        <a asp-controller="SchoolGeneralSettings" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon">
+                <img src="https://cdn-icons-png.flaticon.com/512/4299/4299440.png" alt="School Settings" />
+            </div>
+            <div class="settings-label">General Settings</div>
+        </a>
+    </div>
+
+    @* Capital Sub Accounts *@
+    <div class="col">
+        <a asp-controller="CapitalSubAccount" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon"><img src="https://cdn-icons-png.flaticon.com/512/1484/1484854.png" alt="" /></div>
+            <div class="settings-label">Capital Sub Accounts</div>
+        </a>
+    </div>
+
+    @* Cash & Bank Accounts *@
+    <div class="col">
+        <a asp-controller="CashAccount" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon"><img src="https://cdn-icons-png.flaticon.com/512/7333/7333253.png" alt="" /></div>
+            <div class="settings-label">Cash & Bank Accounts</div>
+        </a>
+    </div>
+    <!-- 🧾 Take Payment Receipt Format -->
+    <div class="col">
+        <a asp-controller="TakePaymentReceipt" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon">
+                <img src="https://cdn-icons-png.flaticon.com/512/10490/10490244.png" alt="Take Payment Receipt" />
+            </div>
+            <div class="settings-label">Payment Receipt Format</div>
+        </a>
+    </div>
+
+    @* Chart of Accounts *@
+    <div class="col">
+        <a asp-controller="ChartOfAccount" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon"><img src="https://cdn-icons-png.flaticon.com/512/3186/3186034.png" alt="" /></div>
+            <div class="settings-label">Chart of Accounts</div>
+        </a>
+    </div>
+
+    @* Designation *@
+    <div class="col">
+        <a asp-controller="Designation" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon"><img src="https://cdn-icons-png.flaticon.com/512/3135/3135768.png" alt="" /></div>
+            <div class="settings-label">Designation</div>
+        </a>
+    </div>
+
+    @* Discount Category *@
+    <div class="col">
+        <a asp-controller="DiscountCategory" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon"><img src="https://cdn-icons-png.flaticon.com/512/854/854894.png" alt="" /></div>
+            <div class="settings-label">Discount Category</div>
+        </a>
+    </div>
+
+    @* Employee Bank *@
+    <div class="col">
+        <a asp-controller="EmployeeBank" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon"><img src="https://cdn-icons-png.flaticon.com/512/318/318439.png" alt="" /></div>
+            <div class="settings-label">Employee Bank</div>
+        </a>
+    </div>
+
+    @* Employee Leave Management *@
+    <div class="col">
+        <a asp-controller="EmployeeLeaveManagement" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon"><img src="https://cdn-icons-png.flaticon.com/512/4673/4673476.png" alt="" /></div>
+            <div class="settings-label">Leave Management</div>
+        </a>
+    </div>
+
+    @* Employee Leave Type *@
+    <div class="col">
+        <a asp-controller="EmployeeLeaveType" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon"><img src="https://cdn-icons-png.flaticon.com/512/3285/3285233.png" alt="" /></div>
+            <div class="settings-label">Employee Leave Type</div>
+        </a>
+    </div>
+
+    @* Employee Vacation *@
+    <div class="col">
+        <a asp-controller="EmployeeVacation" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon"><img src="https://cdn-icons-png.flaticon.com/512/2995/2995422.png" alt="" /></div>
+            <div class="settings-label">Employee Vacation</div>
+        </a>
+    </div>
+
+    @* Employee Withdraw Status *@
+    <div class="col">
+        <a asp-controller="EmployeeWithdrawStatus" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon"><img src="https://cdn-icons-png.flaticon.com/512/11574/11574003.png" alt="" /></div>
+            <div class="settings-label">Withdraw Status</div>
+        </a>
+    </div>
+
+    @* Family Relation *@
+    <div class="col">
+        <a asp-controller="FamilyRelation" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon"><img src="https://cdn-icons-png.flaticon.com/512/4215/4215979.png" alt="" /></div>
+            <div class="settings-label">Family Relation</div>
+        </a>
+    </div>
+
+    @* Fee Discount *@
+    <div class="col">
+        <a asp-controller="FeeDiscount" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon"><img src="https://cdn-icons-png.flaticon.com/512/1904/1904425.png" alt="" /></div>
+            <div class="settings-label">Fee Discount</div>
+        </a>
+    </div>
+
+    @* Fee Service *@
+    <div class="col">
+        <a asp-controller="FeeService" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon"><img src="https://cdn-icons-png.flaticon.com/512/4213/4213179.png" alt="" /></div>
+            <div class="settings-label">Fee Service</div>
+        </a>
+    </div>
+
+    @* Fee Structure *@
+    <div class="col">
+        <a asp-controller="FeeStructure" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon"><img src="https://cdn-icons-png.flaticon.com/512/3595/3595455.png" alt="" /></div>
+            <div class="settings-label">Fee Structure</div>
+        </a>
+    </div>
+
+    @* Fee Title *@
+    <div class="col">
+        <a asp-controller="FeeTitle" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon"><img src="https://cdn-icons-png.flaticon.com/512/2847/2847518.png" alt="" /></div>
+            <div class="settings-label">Fee Title</div>
+        </a>
+    </div>
+
+    @* Fine Slabs *@
+    <div class="col">
+        <a asp-controller="FineSlab" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon"><img src="https://cdn-icons-png.flaticon.com/512/6051/6051864.png" alt="" /></div>
+            <div class="settings-label">Fine Slabs</div>
+        </a>
+    </div>
+
+    <!-- 📅 Weekend & Half Day Setup -->
+    <div class="col">
+        <a asp-controller="WeekendHalfDay" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon">
+                <img src="https://cdn-icons-png.flaticon.com/512/3731/3731476.png" alt="Weekend & Half Day" />
+            </div>
+            <div class="settings-label">Weekend & Half Day</div>
+        </a>
+    </div>
+
+    @* Payment Cycle *@
+    <div class="col">
+        <a asp-controller="PaymentCycle" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon"><img src="https://cdn-icons-png.flaticon.com/512/3163/3163823.png" alt="" /></div>
+            <div class="settings-label">Payment Cycle</div>
+        </a>
+    </div>
+
+    @* Service Category *@
+    <div class="col">
+        <a asp-controller="ServiceCategory" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon"><img src="https://cdn-icons-png.flaticon.com/512/2821/2821297.png" alt="" /></div>
+            <div class="settings-label">Service Category</div>
+        </a>
+    </div>
+
+    @* Student Category *@
+    <div class="col">
+        <a asp-controller="StudentCategory" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon"><img src="https://cdn-icons-png.flaticon.com/512/3717/3717060.png" alt="" /></div>
+            <div class="settings-label">Student Category</div>
+        </a>
+    </div>
+
+    @* Student Leave Type *@
+    <div class="col">
+        <a asp-controller="StudentLeaveType" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon"><img src="https://cdn-icons-png.flaticon.com/512/3208/3208720.png" alt="" /></div>
+            <div class="settings-label">Leave Type</div>
+        </a>
+    </div>
+
+    @* Student Vacation *@
+    <div class="col">
+        <a asp-controller="StudentVacation" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon"><img src="https://cdn-icons-png.flaticon.com/512/4151/4151834.png" alt="" /></div>
+            <div class="settings-label">Vacations</div>
+        </a>
+    </div>
+    <!-- 🏫 Classroom Setup -->
+    <div class="col">
+        <a asp-controller="Classroom" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon">
+                <img src="https://cdn-icons-png.flaticon.com/512/2620/2620983.png" alt="Classroom" />
+            </div>
+            <div class="settings-label">Classroom</div>
+        </a>
+    </div>
+
+    @* Student Withdraw Status *@
+    <div class="col">
+        <a asp-controller="StudentWithdrawStatus" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon"><img src="https://cdn-icons-png.flaticon.com/512/1828/1828479.png" alt="" /></div>
+            <div class="settings-label">Withdraw Status</div>
+        </a>
+    </div>
+    <!-- 📅 Time Table Management -->
+    <div class="col">
+        <a asp-controller="TimeTableManagement" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon">
+                <img src="https://cdn-icons-png.flaticon.com/512/747/747310.png" alt="Time Table" />
+            </div>
+            <div class="settings-label">Time Table</div>
+        </a>
+    </div>
+
+    @* Update Transport Fee *@
+    <div class="col">
+        <a asp-controller="UpdateTransportFee" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon"><img src="https://cdn-icons-png.flaticon.com/512/263/263115.png" alt="" /></div>
+            <div class="settings-label">Update Transport Fee</div>
+        </a>
+    </div>
+
+    @* Update Tuition Fee *@
+    <div class="col">
+        <a asp-controller="UpdateTuitionFee" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon"><img src="https://cdn-icons-png.flaticon.com/512/2752/2752833.png" alt="" /></div>
+            <div class="settings-label">Update Tuition Fee</div>
+        </a>
+    </div>
+
+    <!-- 💼 Payslip Items -->
+    <div class="col">
+        <a asp-controller="PayslipItems" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon">
+                <img src="https://cdn-icons-png.flaticon.com/512/6480/6480323.png" alt="Payslip Items" />
+            </div>
+            <div class="settings-label">Payslip Items</div>
+        </a>
+    </div>
+
+    <!-- 💼 Payslip Titles -->
+    <div class="col">
+        <a asp-controller="PayslipTitle" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon"><img src="https://cdn-icons-png.flaticon.com/512/6480/6480323.png" alt="Payslip Titles" /></div>
+            <div class="settings-label">Payslip Titles</div>
+        </a>
+    </div>
+
+    <!-- 🧾 Recurring Payslip -->
+    <div class="col">
+        <a asp-controller="RecurringPayslip" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon">
+                <img src="https://cdn-icons-png.flaticon.com/512/6214/6214785.png" alt="Recurring Payslip" />
+            </div>
+            <div class="settings-label">Recurring Payslip</div>
+        </a>
+    </div>
+
+    @* Accounts Display *@
+    <div class="col">
+        <a asp-controller="AccountsDisplay" asp-action="Index" class="settings-item d-block">
+            <div class="settings-icon">
+                <img src="https://cdn-icons-png.flaticon.com/512/1621/1621635.png" alt="Accounts Display" />
+            </div>
+            <div class="settings-label">Accounts Head</div>
+        </a>
+    </div>
+
+
+</div>

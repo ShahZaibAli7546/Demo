@@ -1,0 +1,164 @@
+﻿@model Demo.Models.TimeTableManagement
+
+@{
+    ViewData["Title"] = "Edit Time Table";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-primary mb-4">📝 Edit Time Table</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label asp-for="Title" class="form-label"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="CampusId" class="form-label"></label>
+            <select asp-for="CampusId" class="form-select" asp-items="ViewBag.Campuses"></select>
+            <span asp-validation-for="CampusId" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="OpeningTime" class="form-label"></label>
+            <input asp-for="OpeningTime" type="time" class="form-control" />
+            <span asp-validation-for="OpeningTime" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="ClosingTime" class="form-label"></label>
+            <input asp-for="ClosingTime" type="time" class="form-control" />
+            <span asp-validation-for="ClosingTime" class="text-danger"></span>
+        </div>
+
+        <div class="col-12">
+            <div class="form-check form-check-inline">
+                <input asp-for="IsWeekend" class="form-check-input" id="IsWeekend" />
+                <label asp-for="IsWeekend" class="form-check-label"></label>
+            </div>
+            <div id="weekendDaysContainer" style="display:none;" class="mt-2 ms-3">
+                <label class="form-label fw-semibold">Weekend Days:</label>
+                <ul id="weekendDaysList" class="list-unstyled mb-0"></ul>
+            </div>
+        </div>
+
+        <div class="col-12 mt-3">
+            <div class="form-check form-check-inline">
+                <input asp-for="IsHalfDay" class="form-check-input" id="IsHalfDay" />
+                <label asp-for="IsHalfDay" class="form-check-label"></label>
+            </div>
+
+            <div id="halfDayWeekContainer" style="display:none;" class="mt-2 ms-3">
+                <label class="form-label fw-semibold">Select Half Day Weekday:</label>
+                <div id="halfDayOptions" class="d-flex flex-wrap gap-2"></div>
+                <span asp-validation-for="HalfDayWeek" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6" id="halfDayClosingContainer" style="display:none;">
+            <label asp-for="HalfDayClosingTime" class="form-label"></label>
+            <input asp-for="HalfDayClosingTime" type="time" class="form-control" />
+            <span asp-validation-for="HalfDayClosingTime" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="LateLimitMinutes" class="form-label"></label>
+            <input asp-for="LateLimitMinutes" type="number" class="form-control" />
+            <span asp-validation-for="LateLimitMinutes" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="EarlyOutLimitMinutes" class="form-label"></label>
+            <input asp-for="EarlyOutLimitMinutes" type="number" class="form-control" />
+            <span asp-validation-for="EarlyOutLimitMinutes" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary">💾 Save</button>
+        <a asp-action="Index" class="btn btn-secondary">↩️ Back</a>
+    </div>
+</form>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script>
+        const campusSelect = document.getElementById("CampusId");
+        const weekendCheckbox = document.getElementById("IsWeekend");
+        const halfDayCheckbox = document.getElementById("IsHalfDay");
+
+        const weekendContainer = document.getElementById("weekendDaysContainer");
+        const weekendList = document.getElementById("weekendDaysList");
+
+        const halfDayWeekContainer = document.getElementById("halfDayWeekContainer");
+        const halfDayOptions = document.getElementById("halfDayOptions");
+        const halfDayClosingContainer = document.getElementById("halfDayClosingContainer");
+
+        function createHalfDayButtons(days, selectedValue) {
+            halfDayOptions.innerHTML = '';
+            days.forEach(day => {
+                const id = `halfday_${day}`;
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = 'HalfDayWeek';
+                radio.value = day;
+                radio.id = id;
+                radio.className = 'btn-check';
+                if (day === selectedValue) radio.checked = true;
+
+                const label = document.createElement('label');
+                label.className = 'btn btn-outline-primary';
+                label.htmlFor = id;
+                label.innerText = day;
+
+                halfDayOptions.appendChild(radio);
+                halfDayOptions.appendChild(label);
+            });
+        }
+
+        async function loadWeekendDays(campusId) {
+            const response = await fetch(`/TimeTableManagement/GetWeekendDays?campusId=${campusId}`);
+            const days = await response.json();
+            weekendList.innerHTML = days.length
+                ? days.map(d => `<li>🗓️ ${d}</li>`).join('')
+                : '<li><em>No weekend days found.</em></li>';
+        }
+
+        async function loadHalfDayWeekdays(campusId) {
+            const response = await fetch(`/TimeTableManagement/GetHalfDayWeekdays?campusId=${campusId}`);
+            const days = await response.json();
+            const selected = '@Model.HalfDayWeek';
+            createHalfDayButtons(days, selected);
+        }
+
+        function toggleWeekend() {
+            const show = weekendCheckbox.checked;
+            weekendContainer.style.display = show ? 'block' : 'none';
+            if (show && campusSelect.value) loadWeekendDays(campusSelect.value);
+        }
+
+        function toggleHalfDay() {
+            const show = halfDayCheckbox.checked;
+            halfDayWeekContainer.style.display = show ? 'block' : 'none';
+            halfDayClosingContainer.style.display = show ? 'block' : 'none';
+            if (show && campusSelect.value) loadHalfDayWeekdays(campusSelect.value);
+        }
+
+        weekendCheckbox.addEventListener('change', toggleWeekend);
+        halfDayCheckbox.addEventListener('change', toggleHalfDay);
+        campusSelect.addEventListener('change', function () {
+            if (weekendCheckbox.checked) loadWeekendDays(this.value);
+            if (halfDayCheckbox.checked) loadHalfDayWeekdays(this.value);
+        });
+
+        window.addEventListener('load', function () {
+            toggleWeekend();
+            toggleHalfDay();
+        });
+    </script>
+}

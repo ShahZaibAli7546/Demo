@@ -1,0 +1,45 @@
+﻿@model Demo.Models.StudentLeaveType
+@{
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+    ViewData["Title"] = "Add Leave Type";
+}
+
+<h2 class="text-primary mb-4">➕ Add New Leave Type</h2>
+
+<form asp-action="Create" method="post" class="row g-3">
+    <div class="col-md-6">
+        <label asp-for="LeaveTypeName" class="form-label"></label>
+        <input asp-for="LeaveTypeName" class="form-control" />
+        <span asp-validation-for="LeaveTypeName" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="BackgroundColor" class="form-label"></label>
+        <input asp-for="BackgroundColor" type="color" class="form-control form-control-color" />
+        <span asp-validation-for="BackgroundColor" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="Symbol" class="form-label"></label>
+        <input asp-for="Symbol" class="form-control" placeholder="e.g. 📝" />
+        <span asp-validation-for="Symbol" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="Status" class="form-label"></label>
+        <select asp-for="Status" class="form-select">
+            <option>Active</option>
+            <option>Inactive</option>
+        </select>
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+
+    <div class="col-12 d-flex gap-2">
+        <button type="submit" class="btn btn-success">💾 Save</button>
+        <a asp-action="Index" class="btn btn-secondary">🔙 Back</a>
+    </div>
+</form>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

@@ -1,0 +1,27 @@
+﻿@model Demo.Models.StudentVacation
+@{
+    ViewData["Title"] = "Delete Vacation";
+}
+
+<h2 class="text-danger mb-3">Delete Vacation?</h2>
+
+<div class="alert alert-warning">
+    Are you sure you want to delete <strong>@Model.VacationTitle</strong> from <strong>@Model.Campus</strong>?
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Start Date</dt>
+    <dd class="col-sm-9">@Model.StartDate.ToShortDateString()</dd>
+
+    <dt class="col-sm-3">End Date</dt>
+    <dd class="col-sm-9">@Model.EndDate.ToShortDateString()</dd>
+
+    <dt class="col-sm-3">Batch</dt>
+    <dd class="col-sm-9">@Model.Batch</dd>
+</dl>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

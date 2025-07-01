@@ -1,0 +1,102 @@
+﻿@model Demo.Models.FeeService
+
+@{
+    ViewData["Title"] = "Create Fee Service";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-primary mb-4">➕ Add Fee Service</h2>
+
+<form asp-action="Create" method="post" class="row g-3">
+    <div class="col-md-6">
+        <label asp-for="FeeServiceName" class="form-label"></label>
+        <input asp-for="FeeServiceName" class="form-control" />
+        <span asp-validation-for="FeeServiceName" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="CategoryId" class="form-label">Service Category</label>
+        <select asp-for="CategoryId" class="form-select"
+                asp-items="@(ViewBag.Categories != null
+                                            ? new SelectList(ViewBag.Categories, "CategoryId", "CategoryName")
+                                            : new SelectList(Enumerable.Empty<SelectListItem>()))">
+            <option value="">-- Select Category --</option>
+        </select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="AccountId" class="form-label">Account</label>
+        <select asp-for="AccountId" class="form-select"
+                asp-items="@(ViewBag.Accounts != null
+                                            ? new SelectList(ViewBag.Accounts, "AccountId", "DisplayName")
+                                            : new SelectList(Enumerable.Empty<SelectListItem>()))">
+            <option value="">-- Select Account --</option>
+        </select>
+        <span asp-validation-for="AccountId" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="Cost" class="form-label"></label>
+        <input asp-for="Cost" class="form-control" />
+        <span asp-validation-for="Cost" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="PaymentCycle" class="form-label"></label>
+        <select asp-for="PaymentCycle" class="form-select"
+                asp-items="@(ViewBag.PaymentCycles != null
+                                            ? new SelectList(ViewBag.PaymentCycles, "Name", "Name")
+                                            : new SelectList(Enumerable.Empty<SelectListItem>()))">
+            <option value="">-- Select Payment Cycle --</option>
+        </select>
+        <span asp-validation-for="PaymentCycle" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="Remarks" class="form-label"></label>
+        <input asp-for="Remarks" class="form-control" />
+    </div>
+
+    <div class="col-md-3">
+        <div class="form-check mt-4">
+            <input asp-for="ShowOnVoucher" class="form-check-input" />
+            <label asp-for="ShowOnVoucher" class="form-check-label"></label>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="form-check mt-4">
+            <input asp-for="Taxable" class="form-check-input" />
+            <label asp-for="Taxable" class="form-check-label"></label>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="form-check mt-4">
+            <input asp-for="IsRoyalty" class="form-check-input" />
+            <label asp-for="IsRoyalty" class="form-check-label"></label>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="form-check mt-4">
+            <input asp-for="IsBehavioralFine" class="form-check-input" />
+            <label asp-for="IsBehavioralFine" class="form-check-label">Behavioral Fine</label>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <label asp-for="Status" class="form-label"></label>
+        <select asp-for="Status" class="form-select">
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+        </select>
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-success">💾 Save</button>
+        <a asp-action="Index" class="btn btn-secondary">🔙 Back</a>
+    </div>
+</form>

@@ -1,0 +1,17 @@
+﻿@model Demo.Models.ChartOfAccount
+@{
+    ViewData["Title"] = "Delete Account";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-danger mb-4">⚠️ Delete Account</h2>
+
+<div class="alert alert-warning">
+    Are you sure you want to delete <strong>@Model.Title</strong>?
+</div>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="AccountId" />
+    <button type="submit" class="btn btn-danger">🗑️ Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">↩️ Cancel</a>
+</form>

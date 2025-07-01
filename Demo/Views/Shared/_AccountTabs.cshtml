@@ -1,0 +1,14 @@
+﻿@{
+    var current = (Context.Request.Path.Value ?? "").ToLower();
+}
+
+<ul class="nav nav-tabs mb-4">
+    <li class="nav-item">
+        <a class="nav-link @(current.Contains("/cashaccount") ? "active" : "")"
+           asp-controller="CashAccount" asp-action="Index">💵 Cash Accounts</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link @(current.Contains("/bankaccount") ? "active" : "")"
+           asp-controller="BankAccount" asp-action="Index">🏛️ Bank Accounts</a>
+    </li>
+</ul>

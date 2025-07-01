@@ -1,0 +1,129 @@
+﻿@model Demo.Models.ChartOfAccountViewModel
+@{
+    ViewData["Title"] = "Chart of Accounts";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-primary mb-4">📘 Chart of Accounts</h2>
+
+<div class="row">
+    <!-- 🔷 Create Group Form -->
+    <div class="col-md-6">
+        <div class="card border-primary mb-4">
+            <div class="card-header bg-primary text-white">
+                ➕ Create New Group
+            </div>
+            <div class="card-body">
+                <form asp-action="SaveGroup" method="post">
+                    <div class="mb-3">
+                        <label asp-for="NewGroup.Title" class="form-label">Group Title</label>
+                        <input asp-for="NewGroup.Title" class="form-control" />
+                        <span asp-validation-for="NewGroup.Title" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="NewGroup.GroupHead" class="form-label">Group Head</label>
+                        <select asp-for="NewGroup.GroupHead" class="form-select">
+                            <option value="Assets">Assets</option>
+                            <option value="Liabilities">Liabilities</option>
+                            <option value="Equity">Equity</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="NewGroup.Status" class="form-label">Status</label>
+                        <select asp-for="NewGroup.Status" class="form-select">
+                            <option>Active</option>
+                            <option>Inactive</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">💾 Save Group</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🔷 Create Account Head Form -->
+    <div class="col-md-6">
+        <div class="card border-success mb-4">
+            <div class="card-header bg-success text-white">
+                ➕ Create New Account
+            </div>
+            <div class="card-body">
+                <form asp-action="SaveAccount" method="post">
+                    <div class="mb-3">
+                        <label asp-for="NewAccount.Title" class="form-label">Account Title</label>
+                        <input asp-for="NewAccount.Title" class="form-control" />
+                        <span asp-validation-for="NewAccount.Title" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="NewAccount.ParentAccountId" class="form-label">Select Group</label>
+                        <select asp-for="NewAccount.ParentAccountId" class="form-select" asp-items="@(new SelectList(Model.ParentAccounts, "AccountId", "Title"))">
+                            <option value="">-- Select Group --</option>
+                        </select>
+                        <span asp-validation-for="NewAccount.ParentAccountId" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="NewAccount.AccountType" class="form-label">Account Type</label>
+                        <select asp-for="NewAccount.AccountType" class="form-select">
+                            <option value="Debit">Debit</option>
+                            <option value="Credit">Credit</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="NewAccount.StartingBalance" class="form-label">Starting Balance</label>
+                        <input asp-for="NewAccount.StartingBalance" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="NewAccount.Status" class="form-label">Status</label>
+                        <select asp-for="NewAccount.Status" class="form-select">
+                            <option>Active</option>
+                            <option>Inactive</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success">💾 Save Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 🔷 Display All Chart of Account Entries -->
+<h4 class="text-secondary mt-4">📋 All Chart of Account Records</h4>
+
+<table class="table table-bordered table-striped mt-3">
+    <thead class="table-dark">
+        <tr>
+            <th>Title</th>
+            <th>Group Head</th>
+            <th>Account Type</th>
+            <th>Starting Balance</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (ViewBag.Accounts != null)
+        {
+            foreach (var account in ViewBag.Accounts as List<Demo.Models.ChartOfAccount>)
+            {
+                <tr>
+                    <td>@account.Title</td>
+                    <td>@account.GroupHead</td>
+                    <td>@account.AccountType</td>
+                    <td>@(account.StartingBalance?.ToString("N2") ?? "—")</td>
+                    <td>@account.Status</td>
+                    <td>
+                        <form asp-action="Delete" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@account.AccountId" />
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">🗑 Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

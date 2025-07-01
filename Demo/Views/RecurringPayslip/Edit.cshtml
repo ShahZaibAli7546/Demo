@@ -1,0 +1,133 @@
+﻿@model Demo.Models.RecurringPayslip
+
+@{
+    ViewData["Title"] = "Edit Recurring Payslip";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="mb-4 text-primary">✏️ Edit Recurring Payslip</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="row g-3">
+        <div class="col-md-4">
+            <label class="form-label">Campus</label>
+            <select asp-for="CampusId" class="form-select" asp-items="ViewBag.Campuses ?? new List<SelectListItem>()">
+                <option value="">-- Select --</option>
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <label class="form-label">Employee</label>
+            <select asp-for="EmployeeId" class="form-select" asp-items="ViewBag.Employees ?? new List<SelectListItem>()">
+                <option value="">-- Select --</option>
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <label class="form-label">Rate Type</label>
+            <select asp-for="RateType" class="form-select">
+                <option value="">-- Select --</option>
+                <option value="Per Day" selected="@(Model.RateType == "Per Day")">Per Day</option>
+                <option value="Per Hour" selected="@(Model.RateType == "Per Hour")">Per Hour</option>
+            </select>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-check">
+                <input asp-for="LoanReturn" class="form-check-input" />
+                <label class="form-check-label" for="LoanReturn">Loan Return Policy</label>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <label class="form-label">Description</label>
+            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+        </div>
+    </div>
+
+    <hr class="my-4" />
+
+    <h4 class="text-success mb-2">🟢 Earnings</h4>
+    <table class="table table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th>Account</th>
+                <th>Rate</th>
+                <th>Days</th>
+                <th>Hours</th>
+                <th>Minutes</th>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        @await Html.PartialAsync("Partials/_EarningItemsPartial", Model.EarningItems)
+    </table>
+    <button type="button" id="addEarningItemBtn" class="btn btn-success mb-4">+ Add Earning Item</button>
+
+    <h4 class="text-danger mb-2">🔴 Deductions</h4>
+    <table class="table table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th>Account</th>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Type</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        @await Html.PartialAsync("Partials/_DeductionItemsPartial", Model.DeductionItems)
+    </table>
+    <button type="button" id="addDeductionItemBtn" class="btn btn-danger mb-4">+ Add Deduction Item</button>
+
+    <h4 class="text-warning mb-2">🟡 Contributions</h4>
+    <table class="table table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th>Account</th>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Type</th>
+                <th>Every Month</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        @await Html.PartialAsync("Partials/_ContributionItemsPartial", Model.ContributionItems)
+    </table>
+    <button type="button" id="addContributionItemBtn" class="btn btn-warning text-dark mb-4">+ Add Contribution Item</button>
+
+    <div class="row g-3">
+        <div class="col-md-4">
+            <label class="form-label fw-bold">Gross Pay</label>
+            <input asp-for="GrossPay" class="form-control" readonly />
+        </div>
+        <div class="col-md-4">
+            <label class="form-label fw-bold">Total Deduction</label>
+            <input asp-for="TotalDeduction" class="form-control" readonly />
+        </div>
+        <div class="col-md-4">
+            <label class="form-label fw-bold">Total Contribution</label>
+            <input asp-for="TotalContribution" class="form-control" readonly />
+        </div>
+        <div class="col-md-4">
+            <label class="form-label fw-bold">Net Pay</label>
+            <input asp-for="NetPay" class="form-control" readonly />
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary">💾 Update Payslip</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        const earningOptions = `@Html.Raw(string.Join("", ((ViewBag.EarningItems as List<SelectListItem>) ?? new()).Select(x => $"<option value='{x.Value}'>{x.Text}</option>")))`;
+        const deductionOptions = `@Html.Raw(string.Join("", ((ViewBag.DeductionItems as List<SelectListItem>) ?? new()).Select(x => $"<option value='{x.Value}'>{x.Text}</option>")))`;
+        const contributionOptions = `@Html.Raw(string.Join("", ((ViewBag.ContributionItems as List<SelectListItem>) ?? new()).Select(x => $"<option value='{x.Value}'>{x.Text}</option>")))`;
+    </script>
+    <script src="~/js/recurringPayslip.js"></script>
+}

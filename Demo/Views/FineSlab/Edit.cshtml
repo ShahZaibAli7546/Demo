@@ -1,0 +1,12 @@
+﻿@model Demo.Models.FineSlab
+
+@{
+    ViewData["Title"] = "Edit Fine Slab";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-primary mb-4">✏️ Edit Fine Slab</h2>
+
+<form asp-action="Edit" method="post">
+    <partial name="_FineSlabForm" model="Model" />
+</form>

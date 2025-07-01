@@ -1,0 +1,22 @@
+﻿@model Demo.Models.StudentWithdrawStatus
+@{
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+    ViewData["Title"] = "Delete Withdraw Status";
+}
+
+<h2 class="mb-4 text-danger">🗑️ Confirm Delete</h2>
+
+<div class="alert alert-warning">
+    Are you sure you want to delete this withdraw status?
+</div>
+
+<div class="mb-3">
+    <strong>Status:</strong> @Model.StatusName <br />
+    <strong>Description:</strong> @Model.Description
+</div>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

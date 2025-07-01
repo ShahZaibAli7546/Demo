@@ -1,0 +1,26 @@
+﻿@model Demo.Models.CapitalSubAccount
+
+@{
+    ViewData["Title"] = "Edit Capital Sub Account";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="mb-4 text-primary">✏️ Edit Capital Sub Account</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label">Title</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-check mb-3">
+        <input asp-for="IsActive" class="form-check-input" />
+        <label asp-for="IsActive" class="form-check-label">Is Active</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">💾 Update</button>
+    <a asp-action="Index" class="btn btn-secondary">↩️ Back</a>
+</form>

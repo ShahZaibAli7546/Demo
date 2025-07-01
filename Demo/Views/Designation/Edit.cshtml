@@ -1,0 +1,32 @@
+﻿@model Demo.Models.Designation
+
+@{
+    ViewData["Title"] = "Edit Designation";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="mb-3 text-primary">✏️ Edit Designation</h2>
+
+<form asp-action="Edit" method="post" class="row g-3">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="col-md-6">
+        <label asp-for="Name" class="form-label fw-bold"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="Status" class="form-label fw-bold"></label>
+        <select asp-for="Status" class="form-select">
+            <option value="Active" selected="@Model.Status == "Active"">Active</option>
+            <option value="Inactive" selected="@Model.Status == "Inactive"">Inactive</option>
+        </select>
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>

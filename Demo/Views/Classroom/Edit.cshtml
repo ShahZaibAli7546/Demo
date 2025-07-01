@@ -1,0 +1,40 @@
+﻿@model Demo.Models.Classroom
+
+@{
+    ViewData["Title"] = "Edit Classroom";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-primary mb-3">✏️ Edit Classroom</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="ClassId" />
+
+    <div class="mb-3">
+        <label asp-for="ClassName" class="form-label"></label>
+        <input asp-for="ClassName" class="form-control" />
+        <span asp-validation-for="ClassName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Status" class="form-label"></label>
+        <select asp-for="Status" class="form-select">
+            <option value="Active" selected="@(Model?.Status == "Active")">Active</option>
+            <option value="Inactive" selected="@(Model?.Status == "Inactive")">Inactive</option>
+        </select>
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="QRCodeLink" class="form-label">QR Code Link</label>
+        <input asp-for="QRCodeLink" class="form-control" readonly />
+        <span asp-validation-for="QRCodeLink" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">💾 Update</button>
+    <a asp-action="Index" class="btn btn-secondary">🔙 Back</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

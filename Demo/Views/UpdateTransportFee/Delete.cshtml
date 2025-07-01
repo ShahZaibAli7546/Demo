@@ -1,0 +1,25 @@
+﻿@model Demo.Models.UpdateTransportFee
+@{
+    ViewData["Title"] = "Delete Transport Fee";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-danger mb-4">🗑️ Confirm Delete</h2>
+
+<div class="alert alert-warning">
+    Are you sure you want to delete this transport fee record?
+</div>
+
+<div class="mb-3">
+    <strong>Campus ID:</strong> @Model.CampusId<br />
+    <strong>Batch ID:</strong> @Model.BatchId<br />
+    <strong>Fee Service ID:</strong> @Model.FeeServiceId<br />
+    <strong>Amount:</strong> @Model.Amount<br />
+    <strong>Status:</strong> @Model.Status
+</div>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">🗑️ Yes, Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">↩️ Cancel</a>
+</form>

@@ -1,0 +1,19 @@
+﻿@model Demo.Models.Account
+@{
+    ViewData["Title"] = "🗑 Delete Account";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="mb-4 text-danger">@ViewData["Title"]</h2>
+
+<div class="alert alert-warning">Are you sure you want to delete this account?</div>
+
+<div class="mb-3"><strong>Account Code:</strong> @Model.AccountCode</div>
+<div class="mb-3"><strong>Title:</strong> @Model.Title</div>
+<div class="mb-3"><strong>Status:</strong> @(Model.IsActive ? "Active" : "Inactive")</div>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">🗑 Delete</button>
+    <a asp-controller="AccountsDisplay" asp-action="Index" class="btn btn-secondary ms-2">↩️ Cancel</a>
+</form>

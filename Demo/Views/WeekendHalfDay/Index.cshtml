@@ -1,0 +1,40 @@
+﻿@model List<Demo.Models.WeekendHalfDaySetup>
+@{
+    ViewData["Title"] = "Weekend & Half Day Setup List";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="mb-4 text-primary">📋 Weekend & Half Day Setups</h2>
+
+<a asp-action="Create" class="btn btn-primary mb-3">➕ New Setup</a>
+
+<table class="table table-bordered text-center">
+    <thead class="table-light">
+        <tr>
+            <th>Campus</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Weekend</th>
+            <th>Half Day</th>
+            <th>Batches</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.CampusId</td>
+                <td>@item.StartDate.ToShortDateString()</td>
+                <td>@item.EndDate.ToShortDateString()</td>
+                <td>@string.Join(", ", item.WeekendDays)</td>
+                <td>@string.Join(", ", item.HalfDayWeekdays)</td>
+                <td>@string.Join(", ", item.SelectedBatchIds)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">✏️ Edit</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">🗑 Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

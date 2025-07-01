@@ -1,0 +1,60 @@
+﻿@model Demo.Models.FineSlab
+
+@if (Model.Id > 0)
+{
+    <input type="hidden" asp-for="Id" />
+}
+
+<div class="mb-3">
+    <label asp-for="Title" class="form-label">Title</label>
+    <input asp-for="Title" class="form-control" />
+    <span asp-validation-for="Title" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="SelectMode" class="form-label">Select Mode</label>
+    <select asp-for="SelectMode" class="form-select" id="selectModeDropdown">
+        <option value="">-- Select --</option>
+        <option value="Amount Base">Amount Base</option>
+        <option value="Percentage Base">Percentage Base</option>
+        <option value="Daily Base">Daily Base</option>
+    </select>
+    <span asp-validation-for="SelectMode" class="text-danger"></span>
+</div>
+
+<div class="mb-3" id="appliedDaysDiv" style="display: none;">
+    <label asp-for="AppliedDays" class="form-label">Applied Days</label>
+    <input asp-for="AppliedDays" class="form-control" type="number" min="1" />
+    <span asp-validation-for="AppliedDays" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="FineValue" class="form-label">Fine Value</label>
+    <input asp-for="FineValue" class="form-control" type="number" step="0.01" />
+    <span asp-validation-for="FineValue" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="Status" class="form-label">Status</label>
+    <select asp-for="Status" class="form-select">
+        <option value="Active">Active</option>
+        <option value="Inactive">Inactive</option>
+    </select>
+    <span asp-validation-for="Status" class="text-danger"></span>
+</div>
+
+<button type="submit" class="btn btn-primary">💾 Save</button>
+<a asp-action="Index" class="btn btn-secondary">↩️ Back</a>
+
+@section Scripts {
+    <script>
+        function toggleAppliedDays() {
+            const selected = document.getElementById('selectModeDropdown').value;
+            const appliedDaysDiv = document.getElementById('appliedDaysDiv');
+            appliedDaysDiv.style.display = selected === 'Daily Base' ? 'block' : 'none';
+        }
+
+        document.getElementById('selectModeDropdown').addEventListener('change', toggleAppliedDays);
+        window.addEventListener('load', toggleAppliedDays);
+    </script>
+}

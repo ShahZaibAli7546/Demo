@@ -1,0 +1,28 @@
+﻿@model Demo.Models.RecurringPayslip
+
+@{
+    ViewData["Title"] = "Delete Recurring Payslip";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-danger mb-4">🗑️ Delete Recurring Payslip</h2>
+
+<h5 class="mb-3 text-warning">Are you sure you want to delete this payslip?</h5>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-4"><strong>Campus:</strong> @Model.CampusId</div>
+    <div class="col-md-4"><strong>Employee:</strong> @Model.EmployeeId</div>
+    <div class="col-md-4"><strong>Rate Type:</strong> @Model.RateType</div>
+    <div class="col-md-4"><strong>Gross Pay:</strong> @Model.GrossPay.ToString("N2")</div>
+    <div class="col-md-4"><strong>Total Deduction:</strong> @Model.TotalDeduction.ToString("N2")</div>
+    <div class="col-md-4"><strong>Total Contribution:</strong> @Model.TotalContribution.ToString("N2")</div>
+    <div class="col-md-4"><strong>Net Pay:</strong> @Model.NetPay.ToString("N2")</div>
+    <div class="col-md-4"><strong>Loan Return:</strong> @(Model.LoanReturn ? "Yes" : "No")</div>
+    <div class="col-md-12"><strong>Description:</strong> @Model.Description</div>
+</div>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">🗑️ Confirm Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

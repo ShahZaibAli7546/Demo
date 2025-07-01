@@ -1,0 +1,43 @@
+﻿@model Demo.Models.PayslipDeductionItem
+@{
+    ViewData["Title"] = "Create Deduction Item";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-primary mb-4">➕ Create Deduction Item</h2>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label">Title</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Expense Account</label>
+        <select asp-for="ExpenseAccountId" class="form-select" asp-items="ViewBag.Accounts"></select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Liability Account</label>
+        <select asp-for="LiabilityAccountId" class="form-select" asp-items="ViewBag.Accounts"></select>
+    </div>
+
+    <div class="form-check mb-2">
+        <input asp-for="IsAttendance" class="form-check-input" />
+        <label asp-for="IsAttendance" class="form-check-label">Is Attendance Based</label>
+    </div>
+
+    <div class="form-check mb-3">
+        <input asp-for="IsPayable" class="form-check-input" />
+        <label asp-for="IsPayable" class="form-check-label">Is Payable</label>
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+    <a asp-action="Index" asp-controller="PayslipItems" class="btn btn-secondary">Back</a>
+</form>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

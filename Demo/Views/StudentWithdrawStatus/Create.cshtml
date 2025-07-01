@@ -1,0 +1,30 @@
+﻿@model Demo.Models.StudentWithdrawStatus
+@{
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+    ViewData["Title"] = "Create Withdraw Status";
+}
+
+<h2 class="mb-4 text-primary">➕ Add Withdraw Status</h2>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="StatusName" class="form-label"></label>
+        <input asp-for="StatusName" class="form-control" />
+        <span asp-validation-for="StatusName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+    </div>
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-success">💾 Save</button>
+        <a asp-action="Index" class="btn btn-secondary">🔙 Back</a>
+    </div>
+
+</form>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

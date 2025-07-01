@@ -1,0 +1,122 @@
+﻿@model IEnumerable<Demo.Models.TimeTableManagement>
+
+@{
+    ViewData["Title"] = "Time Table Management";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-primary mb-4">📋 Time Table Management</h2>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <a asp-action="Create" class="btn btn-success">➕ Create New Time Table</a>
+    <a asp-action="Apply" class="btn btn-primary">🕒 Apply Time Table</a>
+</div>
+
+<!-- ✅ Main Time Table List -->
+<table class="table table-bordered table-striped">
+    <thead class="table-light">
+        <tr>
+            <th>Title</th>
+            <th>Campus</th>
+            <th>Opening Time</th>
+            <th>Closing Time</th>
+            <th>Weekend</th>
+            <th>Half Day</th>
+            <th>Late Limit (Min)</th>
+            <th>Early Out Limit (Min)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.CampusName</td>
+                <td>@item.OpeningTime</td>
+                <td>@item.ClosingTime</td>
+                <td>
+                    @if (item.IsWeekend && !string.IsNullOrWhiteSpace(item.Weekends))
+                    {
+                <span class="badge bg-primary">
+                    @string.Join(", ", item.Weekends
+                                        .Split(',', StringSplitOptions.RemoveEmptyEntries)
+                                        .Select(d => Enum.TryParse<DayOfWeek>(d.Trim(), out var dow)
+                                        ? dow.ToString().Substring(0, 3)
+                                        : d.Trim()))
+                </span>
+                                }
+                    else
+                    {
+                        <span class="badge bg-secondary">No</span>
+                    }
+                </td>
+                <td>
+                    @if (item.IsHalfDay && !string.IsNullOrWhiteSpace(item.HalfDays))
+                    {
+                <span class="badge bg-warning text-dark">
+                    @string.Join(", ", item.HalfDays
+                                        .Split(',', StringSplitOptions.RemoveEmptyEntries)
+                                        .Select(d => Enum.TryParse<DayOfWeek>(d.Trim(), out var dow)
+                                        ? dow.ToString().Substring(0, 3)
+                                        : d.Trim()))
+                </span>
+                @if (item.HalfDayClosingTime != null)
+                        {
+                            <br />
+                            <small>Closing: @item.HalfDayClosingTime?.ToString(@"hh\:mm")</small>
+                        }
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">No</span>
+                    }
+                </td>
+                <td>@item.LateLimitMinutes</td>
+                <td>@item.EarlyOutLimitMinutes</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-info">✏️ Edit</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">🗑️ Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- ✅ Applied Time Table Section -->
+@if (ViewBag.AppliedList != null)
+{
+    <h3 class="text-secondary mt-5">📌 Recently Applied Time Tables</h3>
+
+    <table class="table table-bordered table-hover mt-3">
+        <thead class="table-light">
+            <tr>
+                <th>Campus</th>
+                <th>Time Table</th>
+                <th>Applied To</th>
+                <th>Selected IDs</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var app in ViewBag.AppliedList)
+            {
+                <tr>
+                    <td>@app.CampusName</td>
+                    <td>@app.TimeTableTitle</td>
+                    <td>@app.ApplyTo</td>
+                    <td>@app.SelectedIds</td>
+                    <td>@app.StartDate</td>
+                    <td>@app.EndDate</td>
+                    <td>
+                        <a asp-action="EditApply" asp-route-id="@app.Id" class="btn btn-sm btn-info">✏️ Edit</a>
+                        <a asp-action="DeleteApply" asp-route-id="@app.Id" class="btn btn-sm btn-danger">🗑️ Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+

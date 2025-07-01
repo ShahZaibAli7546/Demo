@@ -1,0 +1,152 @@
+﻿@model Demo.Models.RecurringPayslip
+
+@{
+    ViewData["Title"] = "Create Recurring Payslip";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="mb-4 text-primary">📝 Create Recurring Payslip</h2>
+
+<form asp-action="Create" method="post">
+    <div class="row g-3">
+        <div class="col-md-4">
+            <label asp-for="CampusId" class="form-label"></label>
+            <select asp-for="CampusId" class="form-select" asp-items="ViewBag.Campuses ?? new List<SelectListItem>()" id="CampusId">
+                <option value="">-- Select Campus --</option>
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="EmployeeId" class="form-label"></label>
+            <select asp-for="EmployeeId" class="form-select" asp-items="ViewBag.Employees ?? new List<SelectListItem>()" id="EmployeeId">
+                <option value="">-- Select Employee --</option>
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="RateType" class="form-label"></label>
+            <select asp-for="RateType" class="form-select">
+                <option value="">-- Select Rate Type --</option>
+                <option value="Per Day">Per Day</option>
+                <option value="Per Hour">Per Hour</option>
+            </select>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-check">
+                @Html.CheckBoxFor(m => m.LoanReturn, new { @class = "form-check-input", id = "LoanReturn" })
+                <label class="form-check-label" for="LoanReturn">Loan Return Policy</label>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <label asp-for="Description" class="form-label"></label>
+            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+        </div>
+    </div>
+
+    <hr class="my-4" />
+
+    <!-- Earnings -->
+    <h4 class="text-success mb-2">🟢 Earnings</h4>
+    <table class="table table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th>Account</th>
+                <th>Rate</th>
+                <th>Days</th>
+                <th>Hours</th>
+                <th>Minutes</th>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="earningItemsBody"></tbody>
+    </table>
+    <button type="button" class="btn btn-success mb-4" id="addEarningItemBtn">+ Add Earning Item</button>
+
+    <!-- Deductions -->
+    <h4 class="text-danger mb-2">🔴 Deductions</h4>
+    <table class="table table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th>Account</th>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Type</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="deductionItemsBody"></tbody>
+    </table>
+    <button type="button" class="btn btn-danger mb-4" id="addDeductionItemBtn">+ Add Deduction Item</button>
+
+    <!-- Contributions -->
+    <h4 class="text-warning mb-2">🟡 Contributions</h4>
+    <table class="table table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th>Account</th>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Type</th>
+                <th>Every Month</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="contributionItemsBody"></tbody>
+    </table>
+    <button type="button" class="btn btn-warning text-dark mb-4" id="addContributionItemBtn">+ Add Contribution Item</button>
+
+    <!-- Totals -->
+    <div class="row g-3">
+        <div class="col-md-3">
+            <label asp-for="GrossPay" class="form-label fw-bold"></label>
+            <input asp-for="GrossPay" class="form-control" readonly />
+        </div>
+        <div class="col-md-3">
+            <label asp-for="TotalDeduction" class="form-label fw-bold"></label>
+            <input asp-for="TotalDeduction" class="form-control" readonly />
+        </div>
+        <div class="col-md-3">
+            <label asp-for="TotalContribution" class="form-label fw-bold"></label>
+            <input asp-for="TotalContribution" class="form-control" readonly />
+        </div>
+        <div class="col-md-3">
+            <label asp-for="NetPay" class="form-label fw-bold"></label>
+            <input asp-for="NetPay" class="form-control" readonly />
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary">💾 Save Payslip</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        const earningOptions = `@Html.Raw(string.Join("", ((ViewBag.EarningItems as List<SelectListItem>) ?? new()).Select(x => $"<option value='{x.Value}'>{x.Text}</option>")))`;
+        const deductionOptions = `@Html.Raw(string.Join("", ((ViewBag.DeductionItems as List<SelectListItem>) ?? new()).Select(x => $"<option value='{x.Value}'>{x.Text}</option>")))`;
+        const contributionOptions = `@Html.Raw(string.Join("", ((ViewBag.ContributionItems as List<SelectListItem>) ?? new()).Select(x => $"<option value='{x.Value}'>{x.Text}</option>")))`;
+
+        // AJAX Load Employees by Campus
+        $('#CampusId').change(function () {
+            const campusId = $(this).val();
+            $('#EmployeeId').html('<option value="">-- Loading Employees --</option>');
+            $.get('/RecurringPayslip/GetEmployeesByCampus', { campusId }, function (data) {
+                let options = '<option value="">-- Select Employee --</option>';
+                data.forEach(emp => {
+                    options += `<option value="${emp.value}">${emp.text}</option>`;
+                });
+                $('#EmployeeId').html(options);
+            });
+        });
+    </script>
+
+    <script src="~/js/recurringPayslip.js"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

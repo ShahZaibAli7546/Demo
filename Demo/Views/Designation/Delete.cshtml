@@ -1,0 +1,25 @@
+﻿@model Demo.Models.Designation
+
+@{
+    ViewData["Title"] = "Delete Designation";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="mb-3 text-danger">🗑️ Confirm Delete</h2>
+
+<div class="alert alert-warning">
+    <strong>Are you sure you want to delete this designation?</strong><br />
+    <ul class="mt-2">
+        <li><strong>Name:</strong> @Model.Name</li>
+        <li><strong>Status:</strong> @Model.Status</li>
+    </ul>
+</div>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-danger">✅ Yes, Delete</button>
+        <a asp-action="Index" class="btn btn-secondary">❌ Cancel</a>
+    </div>
+</form>

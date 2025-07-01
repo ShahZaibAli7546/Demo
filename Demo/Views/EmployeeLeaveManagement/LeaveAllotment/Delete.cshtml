@@ -1,0 +1,23 @@
+﻿@model Demo.Models.LeaveAllotment
+@{
+    ViewData["Title"] = "Delete Leave Allotment";
+    Layout = "~/Views/Shared/_ControlPanelLayout.cshtml";
+}
+
+<h2 class="text-danger">❌ Confirm Delete</h2>
+
+<p>Are you sure you want to delete this leave allotment?</p>
+
+<dl class="row">
+    <dt class="col-sm-3">Employee ID</dt>
+    <dd class="col-sm-9">@Model.EmployeeId</dd>
+
+    <dt class="col-sm-3">Leave Type</dt>
+    <dd class="col-sm-9">@Model.LeaveTypeId</dd>
+</dl>
+
+<form asp-action="DeleteLeaveAllotmentConfirmed" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
